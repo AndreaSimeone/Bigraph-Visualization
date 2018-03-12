@@ -1,0 +1,117 @@
+{
+"interface":{"inner":[{"id":"in1"},{"id":"in2"},{"id":"in3"},{"id":"in4"},{"id":"in5"}],
+			  "outer":[{"id":"out1"},{"id":"out2"}]},
+			  
+"signature":[{"id":"site","shape":"rect","color":"grey"},
+			{"id":"root","shape":"rect","color":"white"},
+			{"id":"node","shape":"ellipse","color":"white"},
+			{"id":"leaf","shape":"circle","color":"white"},
+			{"id":"user","shape":"polygon","sides":"3","color":"white"},
+			{"id":"user2","shape":"polygon","sides":"5","color":"white"}
+],			  
+"nodes":[{
+	"id": "server1900",
+	"type":"root",
+	"children": [{
+		"id": "server913",
+		"type":"node",
+		"children": [{
+			"id": "server948",
+			"type":"site"
+		}, {
+			"id": "server946",
+			"type":"leaf"
+		}]
+	}, {
+		"id": "server912",
+		"type":"node",
+		"children": [{
+			"id": "server984",
+			"type":"leaf"
+		}, {
+			"id": "server983",
+			"type":"site"
+		}]
+	}, {
+		"id": "server911",
+		"type":"user2",
+		"children": [{
+			"id": "server999",
+			"type":"node",
+			"children": [{
+				"id": "server992",
+				"type":"leaf"
+				}]
+			}]
+		}]
+},
+{
+	"id": "server100",
+	"type":"root",
+	"children": [{
+		"id": "server113",
+		"type":"node",
+		"children": [{
+			"id": "server148",
+			"type":"leaf"
+		}, {
+			"id": "server146",
+			"type":"leaf"
+		}]
+	}, {
+		"id": "server112",
+		"type":"node",
+		"children": [{
+			"id": "server184",
+			"type":"leaf"
+		}, {
+			"id": "server183",
+			"type":"leaf"
+		}]
+	}, {
+		"id": "server111",
+		"type":"node",
+		"children": [{
+			"id": "server199",
+			"type":"node",
+			"children": [{
+				"id": "server192",
+				"type":"node",
+				"children": [{
+					"id":"server193",
+					"type":"leaf"
+					}]
+				}]
+			}]
+		}]
+},
+{
+	"id": "server1",
+	"type":"root",
+	"children": [{
+		"id": "server11",
+		"type":"node",
+		"children": [{
+			"id": "server14",
+			"type":"leaf"
+		}, {
+			"id": "server16",
+			"type":"leaf"
+		}]
+	}, {
+		"id": "server12",
+		"type":"node",
+		"children": [{
+			"id": "server15",
+			"type":"leaf"
+		}, {
+			"id": "server13",
+			"type":"leaf"
+			}]
+		}]
+}],
+"links":[
+	["server1900","server911","server999","out1"],
+	["server984","server983"]
+]
+}

@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html>
+<style>
+
+.link {
+  fill: none;
+  stroke: green;
+}
+.node circle {
+
+  pointer-events: all;
+ // stroke: #000;
+ // stroke-width: 1px;
+}
+
+</style>
+<body>
+
+<script type="text/javascript"src="./lib/d3/d3.min.js"></script>
+<script type="text/javascript"src="./lib/d3-hypergraph.js"></script>
+<script type = "text/javascript">
+
+var nodeR = 20, lNodeR = 1;
+var nodeId = 0;
+var width,height;
+
+//zoom handler
+var zoom = d3.zoom()
+    .scaleExtent([1/2, 10])
+    .on("zoom", zoomed);
+
+//drag handler
+var drag = d3.drag()
+        .on("start", dragstarted)
+        .on("drag", dragged)
+        .on("end", dragended);
+
+//svg creation	
+var svg = d3.select("body")
+			.append("svg:svg")
+		//	.attr("width",width)
+		//	.attr("height",height)
+		//	.call(zoom)
+		//	.append("g");
+			
+//container
+var container = svg.append("g").attr("id","container");						
+	
+//defs creation for markers
+var defs = svg.append("defs");
+var simulation = d3.forceSimulation();
+
+	//data reading from json file 
+	d3.json("./data/data2.json", function(error, graph) {
+	  	if (error) throw error;
+		var setsNodes = graph.nodes,
+			links = graph.links,
+			intInterface = graph.interface.inner,
+			outInterface = graph.interface.outer,
+			nodes = [],
+			bilinks = [];
+		var allNodesWLinks = [].concat.apply([], links);
+		setsNodes.forEach(function(d){
+			var root = d3.hierarchy(d)
+			nodes = nodes.concat(flatten(root));
+		});
+		
+//passo solo i nodi con collegamento 		
+// nodes = nodes.filter(function(d){
+// 			if (allNodesWLinks.includes(d.data.id)){
+// 				return d;
+// 			}
+// 		});
+
+		//d3.hypergraph invocation passing links and nodes 
+		var data = d3.hypergraph(links,nodes);
+		//d3.hypergraph links
+		links = data.links;
+		
+		//d3.hypergraph nodes
+		nodes = data.nodes;
+		//dimensione dell'SVG dipende dal numero di nodi
+		width = nodes.length * 40;
+		height = nodes.length * 30;
+		svg.attr("width",width)
+		.attr("height",height)
+		.call(zoom);
+		
+	//force layout definition	
+		simulation.force("link", d3.forceLink().id(function(d) { return d.id; }))
+	  .force("center", d3.forceCenter(width / 2, height / 2))
+		.force("y", d3.forceY(0.005))
+    .force("x", d3.forceX(0.005))
+		.force("collide",d3.forceCollide(30).strength(1));
+		
+	//Layout interfacce in e out
+		var intLayout = d3.forceSimulation();	
+		
+	//calcolo posizione nodi interfaccia inner/outer
+		if (intInterface!=undefined){
+			for (var i=0;i<intInterface.length;i++){
+				intInterface[i].interface = true;
+				intInterface[i].depth = 0;		
+				intInterface[i].data ={id:intInterface[i].id};
+				intInterface[i].fy = height-10;
+				if (i == 0 )
+					intInterface[i].fx = 50;
+				else if (i == intInterface.length-1)
+					intInterface[i].fx = width -50;
+				else
+					intInterface[i].fx = (width/(intInterface.length-1))*i;
+			}
+		}
+		if (outInterface!=undefined){
+		for (var i=0;i<outInterface.length;i++){
+				outInterface[i].interface = true;
+				outInterface[i].depth = 0;
+				outInterface[i].data ={id:outInterface[i].id};
+				outInterface[i].fy = 10;
+				if (i == 0 )
+					outInterface[i].fx = 50;
+				else if (i == outInterface.length-1)
+					outInterface[i].fx = width -50;
+				else 
+					outInterface[i].fx = (width/(outInterface.length-1))*i;
+			}
+		}
+		var nodesInt = undefined;
+		if (intInterface!=undefined && outInterface!=undefined){
+			nodesInt = intInterface.concat(outInterface);
+			intLayout.nodes(nodesInt)
+			.on("tick", tickedInterface);
+		}else if (intInterface===undefined){
+			if (outInterface!=undefined){
+				nodesInt = outInterface;
+				intLayout.nodes(nodesInt)
+				.on("tick", tickedInterface);
+			}
+		}else if (outInterface===undefined){
+			nodesInt = intInterface;
+			intLayout.nodes(nodesInt)
+			.on("tick", tickedInterface);
+		}
+		
+		//visualizzazione interfaccia in/out
+		if (nodesInt!=undefined){
+			var intInnerOuter = container.append("g").attr("class","interface").selectAll("g").data(nodesInt).enter()
+			.append("g").attr("id",function(d){
+			return d.id});
+			var intInnerOuterNodes = intInnerOuter.append("circle")
+			.attr("id",function(d){
+			return d.id}).attr("r",1);
+		
+			intInnerOuter.append("text")
+				.attr("dx", 10)
+				.attr("dy", 0)
+				.text(function(d) { return d.id });
+		//aggiungo ai nodi del linkgraph i nodi dell'interfaccia
+			nodes = nodes.concat(nodesInt);
+		}
+		//aggiungo la proprietà id ad ogni nodo (per non accedere sempre a node.data.id) e semplificare l'accesso all'id
+	  	nodes.forEach(function(d){
+	  		if (!d.id){
+	  			d.id = d.data.id;
+	  		}
+	  	});
+	//node creation
+  	var node = container.selectAll(".node")
+    	.data(nodes.filter(function(d) { 
+			if (!d.interface){
+				return d.id;
+			}
+			 }))
+    	.enter().append("g")
+		.attr("class", "node")
+		.attr("id",d => d.id);
+		
+	//for every node -> svg circle creation
+	node.append("circle")
+		.attr("id",d => d.id)
+        .attr("class", function(d){
+  		  if (d.link){
+  			  return "linknode";
+  		  }else{
+  			  return "node";
+  		  }
+  	  })
+        .attr("r", function(d){
+  		  if (d.link){
+  			  return lNodeR;
+  		  }else{
+  			  return nodeR;
+  		  }
+        })
+				.attr("stroke",function(d) {
+  		  if (d.link){ 
+  		  	return "none";
+  	  	  }else{
+  			  return "black";
+  	  	  }
+  	   })
+        .attr("fill", function(d) {
+  		  if (d.link){ 
+  		  	return "green";
+  	  	  }else{
+  			  return "white";
+  	  	  }
+  	   });
+		
+	//id text
+	node.append("text")
+	    .attr("dx", -35)
+	    .attr("dy", -15)
+	    .text(function(d) { 
+			if (!d.link)
+				return d.id; 
+			return null;		
+		});
+	  
+	//onmouseover id text	  
+	node.append("title")
+		.text(function(d) { 
+			if (!d.link)
+				return d.id; 
+			return null;
+		});
+
+	node.call(drag);
+  		//node mapping by id
+  		nodeById = d3.map(nodes, function(d) { return d.id; });
+		links.forEach(function (link){
+		var s = link.source = nodeById.get(link.source),
+	        t = link.target = nodeById.get(link.target),
+	        i = {}; // intermediate node
+	    	nodes.push(i);
+	    	links.push({source: s, target: i}, {source: t, target: i});
+	    	bilinks.push([s, i, t]);
+		});
+		//links creation 
+	  	var link = container.selectAll(".link")
+	    	.data(bilinks)
+	    	.enter().append("path")
+	    	.attr("class", "link")
+			.attr("id", d =>""+d[0].id + d[2].id)
+	  		.attr("marker-start",function (d){
+	  			if (!d[0].interface)
+	  				return "url(#circleMarker)";
+				else
+					return "null";
+	  		})
+			.attr("marker-mid","url(#textMarker)")
+	  		.attr("marker-end",function (d){
+	  			if (!d[2].link&&!d[2].interface)
+	  				return "url(#circleMarker)";
+				else
+					return "null";
+	  		});
+  
+	  //sphere marker
+	  	var marker = defs.append("marker")
+			.attr("id","circleMarker")
+			.attr("markerHeight", 5)
+			.attr("markerWidth", 5)
+			.attr("markerUnits", "strokeWidth")
+			.attr("orient", "auto")
+			.attr("refX", 0)
+			.attr("refY", 0)
+			.attr("viewBox", "-6 -6 12 12")
+			.append("path")
+			.attr("d","M 0, 0  m -5, 0  a 5,5 0 1,0 10,0  a 5,5 0 1,0 -10,0")
+			.attr("fill","black");
+			
+		simulation
+		.nodes(nodes)
+		.on("tick", ticked)
+		.force("link")
+		.links(links);
+	
+		function ticked() {
+			link.attr("d", positionLink);
+			node.attr("transform", positionNode);
+		}
+		
+		function tickedInterface(){
+			intInnerOuter.attr("transform", positionNode);
+		}
+	});
+
+	function positionLink(d) {
+		diffX0 = d[0].x - d[1].x;
+		diffY0 = d[0].y - d[1].y;
+		diffX2 = d[2].x - d[1].x;
+		diffY2 = d[2].y - d[1].y;
+	
+		pathLength01 = Math.sqrt((diffX0 * diffX0) + (diffY0 * diffY0));
+		pathLength12 = Math.sqrt((diffX2 * diffX2) + (diffY2 * diffY2));
+	
+		offsetX0 = (diffX0 *  nodeR) / pathLength01;
+		offsetY0 = (diffY0 *  nodeR) / pathLength01;
+		if(!d[2].link){
+			offsetX2 = (diffX2 * nodeR) / pathLength12;
+			offsetY2 = (diffY2 * nodeR) / pathLength12;
+		}else{
+			offsetX2 = (diffX2 * lNodeR) / pathLength12;
+			offsetY2 = (diffY2 * lNodeR) / pathLength12;
+		}
+
+		var x0Pos,y0Pos,x2Pos,y2Pos;
+	
+		if (d[0].link||d[0].interface){
+			x0Pos = d[0].x;
+			y0Pos = d[0].y;
+		}else{
+			x0Pos = d[0].x - offsetX0;
+			y0Pos = d[0].y - offsetY0;
+		}
+		if (d[2].link||d[2].interface){
+			x2Pos = d[2].x;
+			y2Pos = d[2].y;
+		}else{
+			x2Pos = d[2].x - offsetX2;
+			y2Pos = d[2].y - offsetY2;
+		}
+
+		return "M" + x0Pos + "," + y0Pos
+	       + "S" + d[1].x + "," + d[1].y
+	       + " " + x2Pos + "," + y2Pos;
+	}
+
+	function positionNode(d) {
+	  return "translate(" + d.x + "," + d.y + ")";
+	}
+
+	function dragstarted(d) {
+	
+	  if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+	  d.fx = d.x, d.fy = d.y;
+	  d3.event.sourceEvent.stopPropagation();
+	}
+
+	function dragged(d) {
+	  d.fx = d3.event.x, d.fy = d3.event.y;
+	}
+
+	function dragended(d) {
+	  if (!d3.event.active) simulation.alphaTarget(0);
+	  d.fx = null, d.fy = null;
+	}
+
+	function zoomed() {
+	  container.attr("transform", d3.event.transform);
+	}
+	
+	function flatten (root) {
+	  // hierarchical data to flat data for force layout
+	  var nodes = [];
+	  function recurse(node) {
+	    if (node.children) node.children.forEach(recurse);
+	    if (!node.data.id) node.data.id = ++nodeId;
+	    else ++nodeId;
+	    nodes.push(node);
+	  }
+	  recurse(root);
+	  return nodes;
+	}   
+	</script>
+	</body>
+	</html>

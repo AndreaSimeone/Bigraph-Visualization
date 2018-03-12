@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html>
+<style>
+
+.node circle {
+  fill: #999;
+}
+
+.node text {
+  font: 20px sans-serif;
+}
+
+.node--internal circle {
+  fill: #555;
+}
+
+.node--internal text {
+  text-shadow: 0 1px 0 #fff, 0 -1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff;
+}
+
+.link {
+  fill: none;
+  stroke: #555;
+  stroke-opacity: 0.4;
+  stroke-width: 1.5px;
+}
+
+</style>
+<body>
+<script type="text/javascript"src="./lib/d3/d3.min.js"></script>
+<script>
+
+var margin = {top: 20, right: 100, bottom: 20, left: 100},
+ width = 600 - margin.right - margin.left,
+ height = 600 - margin.top - margin.bottom;
+ 
+var svg = d3.select("body").append("svg")
+ .attr("width", width + margin.right + margin.left)
+ .attr("height", height + margin.top + margin.bottom);
+
+//lettura file json
+d3.json("./data/data2.json", function(error, treeData) {
+  if (error) throw error;
+  var index = 0;
+  var roots = treeData.nodes;
+	//spostamento nodo determinato dalla dimensione dell'svg
+  roots.forEach(function(d){
+		var shift =  (margin.top+(height/roots.length)*index);
+		var  g = svg.append("g")
+		.attr("transform", "translate(" + margin.left + "," + shift + ")");
+		index++;
+	//funzione D3 per la creazione della gerarchia di nodi con cui realizzare la visualizzazione dell'albero
+	//https://github.com/d3/d3-hierarchy/blob/master/README.md#hierarchy
+		var root = d3.hierarchy(d);
+		//Layout Tree
+		var tree = d3.tree()
+		.size([height/roots.length,width]);
+		tree(root);
+		//Creazione dei collegamenti
+		var link = g.selectAll(".link")
+			.data(root.descendants().slice(1))
+			.enter().append("line")
+			.attr("class", "link")
+			.attr("x1", function(d) { return d.parent.y; })
+			.attr("y1", function(d) { return d.parent.x; })
+			.attr("x2", function(d) { return d.y; })
+			.attr("y2", function(d) { return d.x; });
+		//creazione dei nodi
+		var node = g.selectAll(".node")
+			.data(root.descendants())
+			.enter().append("g")
+			.attr("class", function(d) { return "node" + (d.children ? " node--internal" : " node--leaf"); })
+			.attr("transform", function(d) { 
+				return "translate(" + d.y + "," + d.x + ")"; 
+			});
+			//aggiungo rappresentazione grafica del nodo
+			node.append("circle")
+			.attr("r", 10);
+			//testo descrittivo del nodo
+			node.append("text")
+				.attr("dy", 3)
+				.attr("x", function(d) { return d.children ? -12 : 12; })
+				.style("text-anchor", function(d) { return d.children ? "end" : "start"; })
+				.text(function(d) { 
+				return d.data.id;
+			});
+	});	
+});
+
+</script>
+</body>
+</html>

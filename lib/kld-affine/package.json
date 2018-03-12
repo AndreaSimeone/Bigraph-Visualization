@@ -1,0 +1,59 @@
+{
+  "_from": "kld-affine@^2.0.4",
+  "_id": "kld-affine@2.0.4",
+  "_inBundle": false,
+  "_integrity": "sha1-RYx3HtPLz95kh1t8Y1PHHDDZpfk=",
+  "_location": "/kld-affine",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "kld-affine@^2.0.4",
+    "name": "kld-affine",
+    "escapedName": "kld-affine",
+    "rawSpec": "^2.0.4",
+    "saveSpec": null,
+    "fetchSpec": "^2.0.4"
+  },
+  "_requiredBy": [
+    "/kld-intersections"
+  ],
+  "_resolved": "https://registry.npmjs.org/kld-affine/-/kld-affine-2.0.4.tgz",
+  "_shasum": "458c771ed3cbcfde64875b7c6353c71c30d9a5f9",
+  "_spec": "kld-affine@^2.0.4",
+  "_where": "/Users/Andrea/Dropbox/tirocinio/bigraph/node_modules/kld-intersections",
+  "author": {
+    "name": "Kevin Lindsey",
+    "email": "kevin@kevlindev.com"
+  },
+  "bugs": {
+    "url": "https://github.com/thelonious/kld-affine/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "A collection of classes used in affine geometry",
+  "devDependencies": {
+    "mocha": "^3.4.2"
+  },
+  "engines": {
+    "node": ">= 6.4.0"
+  },
+  "homepage": "https://github.com/thelonious/kld-affine#readme",
+  "keywords": [
+    "affine",
+    "point",
+    "vector",
+    "matrix"
+  ],
+  "license": "BSD-3-Clause",
+  "main": "index.js",
+  "name": "kld-affine",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/thelonious/kld-affine.git"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "version": "2.0.4"
+}

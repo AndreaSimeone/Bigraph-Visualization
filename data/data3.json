@@ -1,0 +1,31 @@
+{
+"interface":{},
+			  
+"signature":[{"id":"site","shape":"rect","color":"grey"},
+			{"id":"root","shape":"rect","color":"white"},
+			{"id":"node","shape":"ellipse","color":"white"},
+			{"id":"leaf","shape":"circle","color":"white"},
+			{"id":"user","shape":"polygon","sides":"3","color":"white"},
+			{"id":"user2","shape":"polygon","sides":"5","color":"white"}
+],			  
+"nodes":[{
+	"id": "r0",
+	"type":"root",
+	"children": [{
+		"id": "c1",
+		"type":"user2"
+	},{"id": "c2",
+		"type":"node",
+		"children":[{
+			"id":"s1",
+			"type":"leaf"
+		},{
+			"id":"l1",
+			"type":"leaf"
+		}]
+	}]
+}],
+"links":[
+	["c2","c1","l1"]
+]
+}

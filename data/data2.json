@@ -1,0 +1,49 @@
+{
+"interface":{"inner":[{"id":"x0"},{"id":"x1"}],
+			  "outer":[{"id":"y0"},{"id":"y1"},{"id":"y2"}]},
+"signature":[{"id":"site","shape":"rect","color":"grey"},
+			{"id":"root","shape":"rect","color":"white"},
+			{"id":"node","shape":"ellipse","color":"white"},
+			{"id":"leaf","shape":"circle","color":"white"}
+],			  
+"nodes":[{
+	"id": "r0",
+	"type":"root",
+	"children": [{
+		"id": "v2",
+		"type":"node"},
+		{
+		"id": "v0",
+		"type":"node",
+		"children": [{
+			"id": "v1",
+			"type":"node",
+			"children":[{
+				"id": "s0",
+				"type":"site"
+			}]
+		}]
+	}]
+},
+{
+	"id": "r1",
+	"type":"root",
+	"children": [{
+		"id": "v3",
+		"type":"node",
+		"children": [{
+			"id": "s2",
+			"type":"site"
+		}]
+	},{
+		"id": "s1",
+		"type":"site"
+		}]
+}],
+"links":[
+	["v0","v1","v2","y0"],
+	["v2","y1"],
+	["v2","v3","y2","x0"],
+	["x1","v3"]
+]
+}
