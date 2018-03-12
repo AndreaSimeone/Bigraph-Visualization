@@ -9,8 +9,8 @@ Download the [latest release](https://github.com/AndreaSimeone/Bigraph-Visualiza
 ## Package Overview
 
 - **PlaceGraph.html** : visualization of the Place Graph using D3 [hierarchy](https://github.com/d3/d3-hierarchy) layout.
-- **LinkGraph.html** : visualization of the Link Graph using D3 [force layout](https://github.com/d3/d3-force) and D3-Hypergraph(https://github.com/AndreaSimeone/d3-hypergraph) for the Hypergraphs creation.
-- **Bigraph.html** : visualization of the Bigraph as a superimposition of Place Graph and Link Graph using D3 [force layout](https://github.com/d3/d3-force) and D3-Hypergraph(https://github.com/AndreaSimeone/d3-hypergraph) for the Hypergraphs creation. 
+- **LinkGraph.html** : visualization of the Link Graph using D3 [force layout](https://github.com/d3/d3-force) and [D3-Hypergraph](https://github.com/AndreaSimeone/d3-hypergraph) for the Hypergraphs creation.
+- **Bigraph.html** : visualization of the Bigraph as a superimposition of Place Graph and Link Graph using D3 [force layout](https://github.com/d3/d3-force) and [D3-Hypergraph](https://github.com/AndreaSimeone/d3-hypergraph) for the Hypergraphs creation. 
 
 ## License
 
