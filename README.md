@@ -12,7 +12,7 @@ Download the [latest release](https://github.com/AndreaSimeone/Bigraph-Visualiza
 - **LinkGraph.html** : d3 visualization of the Link Graph.
 - **Bigraph.html** : d3 visualization of the Bigraph as a superimposition of Place Graph and Link Graph.
 
-##License
+## License
 
 Copyright (C) 2018 Andrea Simeone simeone.andrea@spes.uniud.it
 
