@@ -1,0 +1,60 @@
+\def\thud@unisep{0pt}
+\def\thud@se@and{0pt}
+\def\thud@se@qual{.5ex}
+\def\thud@se@sep{1em}
+
+%% Copied and adapted from beamerbasetitle.sty
+\long\def\beamer@author[#1]#2{%
+    \def\@author{#2}%
+    \def\beamer@shortauthor{#1}%
+    \ifbeamer@autopdfinfo%
+        \def\beamer@andstripped{}%
+        \beamer@stripands#2 \and\relax
+        {\let\inst=\@gobble\let\thanks=\@gobble\def\and{, }\hypersetup{pdfauthor={\beamer@andstripped}}}
+    \fi%
+}
+%% Copied and adapted from beamerbasetitle.sty
+\long\def\beamer@institute[#1]#2{%
+    \def\beamer@temp{#2}%
+    \ifx\beamer@temp\@empty
+        \def\insertinstitute{}
+    \else
+        \def\insertinstitute{#2}%
+    \fi
+    \def\beamer@shortinstitute{#1}%
+}
+%% Copied and adapted from beamerbasetitle.sty
+\long\def\beamer@date[#1]#2{%
+    \def\@date{#2}%
+    \def\beamer@shortdate{#1}%
+}
+
+\institute[UniUD]{\thud@universityA}
+
+\def\insertdate{\ifx\thud@cycle\@empty\datename\else\cyclename~\thud@cycle\ --- \shortdatename\fi~\@date}
+\def\insertshortdate{\shortdatename~\@date}
+\def\insertauthor{%
+    \parbox[t]{.4\linewidth}{%
+        \let\thud@candidate\@author
+        \thud@showentry*{candidate}%
+    }%
+    \quad%
+    \parbox[t]{.4\linewidth}{%
+        \thud@showentry{supervisor}%
+        \thud@showentry{cosupervisor}%
+        \thud@showentry{tutor}%
+    }%
+}
+
+\renewcommand\maketitle[1][]{%
+    \begingroup%
+    \setbeamertemplate{background canvas}{%
+        \parbox[c][\paperheight]{\paperwidth}{\centering%
+            \includegraphics[height=.9\paperheight,width=.9\paperwidth,keepaspectratio]{UdineLogoFull}%
+        }%
+    }%
+    \def\thud@tmpcmd{#1}%
+    \ifx\@empty\thud@tmpcmd\def\thud@tmpcmd{environment=}\fi%
+    \expandafter\frame\expandafter[\thud@tmpcmd]{\titlepage}%
+    \endgroup%
+}

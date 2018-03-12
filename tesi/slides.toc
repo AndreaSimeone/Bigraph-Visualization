@@ -1,0 +1,5 @@
+\beamer@endinputifotherversion {3.36pt}
+\select@language {italian}
+\select@language {italian}
+\beamer@sectionintoc {1}{Sezione}{2}{0}{1}
+\beamer@subsectionintoc {1}{1}{Sottosezione}{3}{0}{1}

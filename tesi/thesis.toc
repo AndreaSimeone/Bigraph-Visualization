@@ -1,0 +1,52 @@
+\select@language {italian}
+\select@language {italian}
+\contentsline {chapter}{Indice}{v}{chapter*.1}
+\contentsline {chapter}{Elenco delle figure}{vii}{chapter*.2}
+\contentsline {chapter}{\numberline {1}Introduzione}{1}{chapter.1}
+\contentsline {chapter}{\numberline {2}Bigrafi}{3}{chapter.2}
+\contentsline {section}{\numberline {2.1}Bigrafi e loro componenti}{3}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}Tipologie di nodi}{3}{subsection.2.1.1}
+\contentsline {subsection}{\numberline {2.1.2}Place Graph}{4}{subsection.2.1.2}
+\contentsline {subsection}{\numberline {2.1.3}Link Graph}{5}{subsection.2.1.3}
+\contentsline {subsection}{\numberline {2.1.4}Bigrafo}{5}{subsection.2.1.4}
+\contentsline {subsection}{\numberline {2.1.5}Composizione tra Bigrafi}{6}{subsection.2.1.5}
+\contentsline {subsection}{\numberline {2.1.6}Giustapposizione di Bigrafi}{7}{subsection.2.1.6}
+\contentsline {chapter}{\numberline {3}Analisi e Progetto}{9}{chapter.3}
+\contentsline {section}{\numberline {3.1}Definizione dei Requisiti}{9}{section.3.1}
+\contentsline {section}{\numberline {3.2}Progetto: architettura di riferimento}{10}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}Descrizione dei moduli}{10}{subsection.3.2.1}
+\contentsline {subsubsection}{\numberline {3.2.1.1}Presentation \& Application Layer}{10}{subsubsection.3.2.1.1}
+\contentsline {subsubsection}{\numberline {3.2.1.2}Data Management Layer}{11}{subsubsection.3.2.1.2}
+\contentsline {subsection}{\numberline {3.2.2}Descrizione della comunicazione tra moduli}{11}{subsection.3.2.2}
+\contentsline {subsubsection}{\numberline {3.2.2.1}Richiesta del client}{11}{subsubsection.3.2.2.1}
+\contentsline {subsubsection}{\numberline {3.2.2.2}Risposta del server}{12}{subsubsection.3.2.2.2}
+\contentsline {chapter}{\numberline {4}Implementazione}{13}{chapter.4}
+\contentsline {section}{\numberline {4.1}Motore di rendering}{13}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Caratteristiche di D3.js}{14}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}D3.js Selezioni}{14}{subsection.4.1.2}
+\contentsline {subsection}{\numberline {4.1.3}D3.js Data Binding }{14}{subsection.4.1.3}
+\contentsline {subsection}{\numberline {4.1.4}D3.js e i Layout}{15}{subsection.4.1.4}
+\contentsline {subsection}{\numberline {4.1.5}D3.js version 4}{15}{subsection.4.1.5}
+\contentsline {section}{\numberline {4.2}SVG - Scalable Vector Graphics}{15}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Caratteristiche di SVG}{16}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}Gestione dell'aspetto del contenuto SVG}{16}{subsection.4.2.2}
+\contentsline {section}{\numberline {4.3}Descrizione dell'implementazione}{17}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}Definizione della Struttura Dati}{17}{subsection.4.3.1}
+\contentsline {subsubsection}{\numberline {4.3.1.1}Codifica dell'Interfaccia}{17}{subsubsection.4.3.1.1}
+\contentsline {subsubsection}{\numberline {4.3.1.2}Codifica della Signature}{17}{subsubsection.4.3.1.2}
+\contentsline {subsubsection}{\numberline {4.3.1.3}Codifica dei Nodi}{18}{subsubsection.4.3.1.3}
+\contentsline {subsubsection}{\numberline {4.3.1.4}Codifica dei Collegamenti}{18}{subsubsection.4.3.1.4}
+\contentsline {subsection}{\numberline {4.3.2}Codifica e visualizzazione del Place Graph}{18}{subsection.4.3.2}
+\contentsline {subsection}{\numberline {4.3.3}Codifica e visualizzazione del Link Graph}{20}{subsection.4.3.3}
+\contentsline {subsection}{\numberline {4.3.4}Visualizzazione Bigrafo}{22}{subsection.4.3.4}
+\contentsline {subsubsection}{\numberline {4.3.4.1}Creazione e visualizzazione radici}{22}{subsubsection.4.3.4.1}
+\contentsline {subsubsection}{\numberline {4.3.4.2}Creazione e visualizzazione altri nodi}{22}{subsubsection.4.3.4.2}
+\contentsline {subsubsection}{\numberline {4.3.4.3}Creazione e visualizzazione connessioni tra nodi}{23}{subsubsection.4.3.4.3}
+\contentsline {subsubsection}{\numberline {4.3.4.4}Creazione e placing dei terminatori di link}{26}{subsubsection.4.3.4.4}
+\contentsline {section}{\numberline {4.4}Esempi di visualizzazione}{28}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}Bigrafo con una radice}{28}{subsection.4.4.1}
+\contentsline {subsection}{\numberline {4.4.2}Bigrafo con due radici}{29}{subsection.4.4.2}
+\contentsline {subsection}{\numberline {4.4.3}Bigrafo con tre radici}{32}{subsection.4.4.3}
+\contentsline {subsubsection}{\numberline {4.4.3.1}Struttura dati}{32}{subsubsection.4.4.3.1}
+\contentsline {chapter}{\numberline {5}Conclusioni}{37}{chapter.5}
+\contentsline {chapter}{Bibliografia}{39}{chapter*.32}

@@ -1,0 +1,56 @@
+%% Le lingue utilizzate, che verranno passate come opzioni al pacchetto babel. Come sempre, l'ultima indicata sarà quella primaria.
+%% Se si utilizzano una o più lingue diverse da "italian" o "english", leggere le istruzioni in fondo.
+\def\thudbabelopt{english,italian}
+%% Valori ammessi per target: bach (tesi triennale), mst (tesi magistrale), phd (tesi di dottorato).
+%% --- Beamer ---
+%% La chiave "beamer" attiva la modalità slide e specifica le opzioni da passare all'omonima classe.
+%% Le opzioni specificate "noamsthm,10pt" sono solamente indicative.
+%% L'uso dell'opzione "ignorenonframetext" può creare problemi ed è quindi sconsigliato.
+%% Se incontrate problemi con altre opzioni di "beamer" fatecelo sapere.
+\documentclass[beamer={noamsthm,10pt},target=mst]{thud}[2014/03/11]
+
+%% --- Informazioni sulla tesi ---
+%% Per tutti i tipi di tesi
+\title{Retrospettiva antero-posteriore dei linguaggi funzionali imperativi}
+\author{Nello Sconforto}
+\course{Informatica}
+\supervisor{Prof.\ Sara Cinesca}
+\cosupervisor{Dott.\ Remo Mori\and Dott.\ Dario Lampa}
+%% Altri campi disponibili: \tutor, \date (anno accademico, calcolato in automatico).
+%% Con \supervisor, \cosupervisor e \tutor si possono indicare più nomi separati da \and.
+%% Per le sole tesi di dottorato
+\cycle{XXVIII}
+%% Campi obbligatori: \title, \author e \course.
+
+%% Nel resto del preambolo potete personalizzare la presentazione liberamente.
+%% Se incontrate problemi causati dall'interazione tra "thud" e "beamer" fatecelo sapere.
+
+\begin{document}
+
+%% Il frontespizio prima di tutto!
+%% \maketitle accetta gli stessi argomenti opzionali di \begin{frame} (p.es. "[plain]")
+\maketitle
+
+%% Sezione
+\section{Sezione}
+
+%% Diapositiva
+\begin{frame}{Diapositiva}
+\begin{itemize}
+\item Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+\item Morbi varius neque eu erat dictum pulvinar.
+\item Cras pellentesque lacus sit amet magna dictum, ut tempus eros consequat.
+\end{itemize}
+\end{frame}
+
+%% Sottosezione
+\subsection{Sottosezione}
+\begin{frame}{Altra diapositiva}
+\begin{enumerate}
+\item Nunc ornare elit et pretium commodo.
+\item Aenean a urna eu diam interdum sagittis faucibus non quam.
+\item Mauris eget massa eget ipsum condimentum varius non et eros.
+\end{enumerate}
+\end{frame}
+
+\end{document}

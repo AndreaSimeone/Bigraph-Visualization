@@ -1,0 +1,53 @@
+\select@language {italian}
+\select@language {italian}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {1.1}{\ignorespaces Esempio di bigrafo \relax }}{2}{figure.caption.3}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Esempio di bigrafo e relativo place graph.\relax }}{4}{figure.caption.4}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Bigrafo}}}{4}{subfigure.1.1}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Place graph}}}{4}{subfigure.1.2}
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Link graph del bigrafo in figura~\ref {rif:fig-bigrafoEplaceGraph}\relax }}{5}{figure.caption.5}
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Bigrafi $C$ e $D$ che compongono il bigrafo di figura~\ref {rif:fig-bigrafoComposto}\relax }}{6}{figure.caption.6}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Bigrafo $D$}}}{6}{subfigure.3.1}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Bigrafo $C$}}}{6}{subfigure.3.2}
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Bigrafo $B$ risultante dall'operazione di composizione $D\circ C$ \relax }}{7}{figure.caption.7}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Esempio di sistema Two-Tier\relax }}{10}{figure.caption.8}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Schema di richiesta risorse \relax }}{12}{figure.caption.9}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Schema di ricezione risorse \relax }}{12}{figure.caption.10}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Rappresentazione dell'interfaccia in JSON\relax }}{17}{figure.caption.11}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Rappresentazione della Signature in JSON\relax }}{17}{figure.caption.12}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Rappresentazione dei collegamenti in JSON\relax }}{18}{figure.caption.13}
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Esempio di codifica di struttura dati gerarchica in JSON \relax }}{19}{figure.caption.14}
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Parte del codice di realizzazione dell'albero con D3.js\relax }}{19}{figure.caption.15}
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Visualizzazione dell'albero\relax }}{19}{figure.caption.16}
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Esempio di ipergrafo\relax }}{21}{figure.caption.17}
+\contentsline {figure}{\numberline {4.8}{\ignorespaces Parte del codice per la realizzazione del pacchetto D3-hypergraph\relax }}{21}{figure.caption.18}
+\contentsline {figure}{\numberline {4.9}{\ignorespaces Esempio di grafo ottenuto con layout Force e il pacchetto D3-hypergraph\relax }}{21}{figure.caption.19}
+\contentsline {figure}{\numberline {4.10}{\ignorespaces Parte del codice per la visualizzazione dei nodi radice\relax }}{22}{figure.caption.20}
+\contentsline {figure}{\numberline {4.11}{\ignorespaces Esempio di inclusione tra nodi ottenuta con 4 layout Force\relax }}{23}{figure.caption.21}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {file Json che descrive la struttura del bigrafo}}}{23}{subfigure.11.1}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Esempio di inclusione tra nodi ottenuta con 4 layout Force}}}{23}{subfigure.11.2}
+\contentsline {figure}{\numberline {4.12}{\ignorespaces Differenze tra markup generato da force layout singolo e multipli.\relax }}{24}{figure.caption.22}
+\contentsline {figure}{\numberline {4.13}{\ignorespaces Visualizzazione delle propriet\`a x e y dei nodi\relax }}{24}{figure.caption.23}
+\contentsline {figure}{\numberline {4.14}{\ignorespaces Esempi di risultati ottenuti senza considerare la trasformazione eseguita dal nodo padre o invece considerandola\relax }}{25}{figure.caption.24}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Link senza trasformazione del nodo padre}}}{25}{subfigure.14.1}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Link con trasformazione del nodo padre}}}{25}{subfigure.14.2}
+\contentsline {figure}{\numberline {4.15}{\ignorespaces Funzione per il calcolo della posizione di un nodo\relax }}{26}{figure.caption.25}
+\contentsline {figure}{\numberline {4.16}{\ignorespaces Esempio di Bigrafo con utilizzo di marcatori di collegamento\relax }}{27}{figure.caption.26}
+\contentsline {figure}{\numberline {4.17}{\ignorespaces Esempio di definizione e utilizzo di un marcatore a freccia con un elemento polyline\relax }}{27}{figure.caption.27}
+\contentsline {figure}{\numberline {4.18}{\ignorespaces Posizionamento dei marcatori a seguito del calcolo delle intersezioni tra figure SVG\relax }}{28}{figure.caption.28}
+\contentsline {figure}{\numberline {4.19}{\ignorespaces Visualizzazione risultati esempio\relax }}{29}{figure.caption.29}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Place Graph}}}{29}{subfigure.19.1}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Link Graph}}}{29}{subfigure.19.2}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {Bigrafo}}}{29}{subfigure.19.3}
+\contentsline {figure}{\numberline {4.20}{\ignorespaces Visualizzazione risultati esempio\relax }}{31}{figure.caption.30}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Place Graph}}}{31}{subfigure.20.1}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Link Graph}}}{31}{subfigure.20.2}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {Bigrafo}}}{31}{subfigure.20.3}
+\contentsline {figure}{\numberline {4.21}{\ignorespaces Visualizzazione risultati esempio\relax }}{34}{figure.caption.31}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Place Graph}}}{34}{subfigure.21.1}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Link Graph}}}{34}{subfigure.21.2}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {Bigrafo}}}{34}{subfigure.21.3}
+\addvspace {10\p@ }

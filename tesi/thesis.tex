@@ -1,0 +1,982 @@
+%% Le lingue utilizzate, che verranno passate come opzioni al pacchetto babel. Come sempre, l'ultima indicata sarà quella primaria.
+%% Se si utilizzano una o più lingue diverse da "italian" o "english", leggere le istruzioni in fondo.
+\def\thudbabelopt{english,italian}
+%% Valori ammessi per target: bach (tesi triennale), mst (tesi magistrale), phd (tesi di dottorato).
+\documentclass[target=bach]{thud}[2014/03/11]
+
+%% --- Informazioni sulla tesi ---
+%% Per tutti i tipi di tesi
+\title{Visualizzazione interattiva di bigrafi attraverso la libreria D3.js}
+\author{Andrea Simeone}
+\course{Tecnologie Web e Multimediali}
+\supervisor{Prof.\ Marino Miculan}
+\date {2017-2018}
+%%\cosupervisor{Dott.\ Remo Mori\and Dott.\ Dario Lampa}
+%% Altri campi disponibili: \reviewer, \tutor, \chair, \date (, calcolato in automatico).
+%% Con \supervisor, \cosupervisor, \reviewer e \tutor si possono indicare più nomi separati da \and.
+%% Per le sole tesi di dottorato
+%%\phdnumber{313}
+%%\cycle{XXVIII}
+%%\contacts{Via della Sintassi Astratta, 0/1\\65536 Gigatera --- Italia\\+39 0123 456789\\\texttt{http://www.example.com}\\\texttt{inbox@example.com}}
+%%\rights{Tutti i diritti riservati a me stesso e basta.}
+%% Campi obbligatori: \title, \author e \course.
+
+%% --- Pacchetti consigliati ---
+%% hyperref: Regola le impostazioni della creazione del PDF... più tante altre cose.
+%% tocbibind: Inserisce nell'indice anche la lista delle figure, la bibliografia, ecc.
+
+%Pacchetti
+\usepackage[a-1b]{pdfx}
+%\usepackage{hyperref}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{tocbibind}
+\usepackage {graphicx}
+\usepackage[latin1]{inputenc}
+\usepackage{titlesec}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{placeins}
+\usepackage{subfig} % sottofigure
+\usepackage{upgreek}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=Java,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+\graphicspath{./figure/}
+%% --- Stili di pagina disponibili (comando \pagestyle) ---
+%% sfbig (predefinito): Apertura delle parti e dei capitoli col numero grande; titoli delle parti e dei capitoli e intestazioni di pagina in sans serif.
+%% big: Come "sfbig", solo serif.
+%% plain: Apertura delle parti e dei capitoli tradizionali di LaTeX; intestazioni di pagina come "big".
+\setcounter{tocdepth}{4}
+\setcounter{secnumdepth}{4}
+
+%Comandi
+\newtheoremstyle{mystyle}{}{}{\normalfont}{}{\bfseries}{.}{ }{}
+\newtheorem{teor}{Teorema}[section]
+\newtheorem{define}{Definizione}[section]
+\newtheorem*{notaz}{Notazione}
+\newtheorem*{term}{Terminologia}
+\newtheorem{prop}{Proposizione}[section]
+\theoremstyle{mystyle}
+\newtheorem*{dimos}{Dimostrazione}
+\newtheorem{corol}{Corollario}[section]
+\begin{document}
+
+%% Il frontespizio prima di tutto!
+\maketitle{}
+
+%% Dedica (opzionale)
+\begin{dedication}
+Alla mia famiglia.
+\end{dedication}
+
+%% Ringraziamenti (opzionali)
+
+%% Sommario (opzionale)
+%% Indice
+\tableofcontents
+
+%% Lista delle tabelle (se presenti)
+%\listoftables
+
+%% Lista delle figure (se presenti)
+\listoffigures
+
+%% Corpo principale del documento
+\mainmatter
+
+%% Parte
+%% La suddivisione in parti è opzionale; talvolta sono sufficienti i capitoli.
+
+%Boxlisting
+\newsavebox{\firstlisting}
+\begin{lrbox}{\firstlisting}% Store first listing
+\begin{minipage}[b]{0.3\textwidth}
+\begin{lstlisting}
+...
+"nodes":[{
+	"id": "R0",
+	"type":"root",
+	"children": [{
+		"id": "V0",
+		"type":"node",
+		"children":[{
+			"id": "L0",
+			"type":"leaf"},
+			{
+			"id": "L1",
+			"type":"leaf"
+			}]
+		},
+		{
+		"id": "V1",
+		"type":"node",
+		"children":[{
+			"id": "L2",
+			"type":"leaf"},
+			{
+			"id": "L3",
+			"type":"leaf"
+			}]
+		}]
+	}],
+...
+\end{lstlisting}
+\end{minipage}
+\end{lrbox}
+
+\newsavebox{\secondlisting}
+\begin{lrbox}{\secondlisting}% Store first listing
+\begin{minipage}[b]{1\textwidth}
+
+\begin{lstlisting}[language=HTML,label={lst:cap4-listingarrow}]
+<svg width="120" height="120">
+//definizione del marker a freccia
+  <defs>
+    <marker id="Triangle" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" />
+    </marker>
+  </defs>
+//utilizzo del marker a freccia al termine dell'elemento polyline
+  <polyline points="10,90 50,80 90,20" fill="none" stroke="black" 
+      stroke-width="2" marker-end="url(#Triangle)" />
+</svg>
+\end{lstlisting}
+\end{minipage}
+\end{lrbox}
+
+%% Capitolo
+\chapter{Introduzione}
+\label{sec:rif-cap1}
+Negli ultimi anni la crescente disponibilità di sistemi di calcolo a costi ridotti, la crescente diffusione di sistemi software e la progressiva riduzione del costo dell'accesso alla rete unito l'allargamento delle ampiezze di banda disponibile hanno portato alla diffusione di sistemi mobili distribuiti. Di pari passo con la diffusione dei sistemi distribuiti sono stati proposti diversi modelli formali per la loro descrizione e definizione. Tra i vari modelli proposti in letteratura un modello ormai consolidato sono i \emph{bigrafi} descritti da Milner in \cite{DBLP:books/daglib/0022395}\cite{milner2006pure}. Questi permettono una trattazione intuitiva degli oggetti che compongono un sistema distribuito e di come essi interagiscono tra loro. I bigrafi grazie alla loro generalità si presentano come un meta-modello capace di descrivere sistemi di qualsiasi dominio si voglia: sono stati utilizzati per descrivere automi a stati finiti\cite{debois2005bigraphs}, $\pi$ calcolo, reti di Petri\cite{DBLP:conf/ac/Milner03} e anche sistemi biologici\cite{bgm:biobeta}. Punto di forza dei bigrafi è la capacità di unire al rigore formale del modello una rappresentazione grafica che ben rappresenta il sistema che viene descritto rendendo accessibile la comprensione dei processi che lo coinvolgono.
+\begin{figure}[t]
+\begin{center}
+\includegraphics[scale = 0.5]{figure/bigrafoEsempio}
+\caption{Esempio di bigrafo }
+\end{center}
+\end{figure}
+Ad oggi, nonostante la sempre maggior diffusione del modello, lo sviluppo di sistemi per la realizzazione di rappresentazioni grafiche accurate dei bigrafi risulta ancora lacunoso: sono state proposte alcune soluzioni\footnote{Anche il Laboratorio di Sistemi Distribuiti dell'Università di Udine, all'interno di una libreria di implementazione di bigrafi e BRS, ha sviluppato un sistema di visualizzazione di bigrafi. Per maggiori informazioni: http://mads.uniud.it/wordpress/downloads/libbig/}\cite{bgm:dbtk}\cite{faithfull2013big} che però presentano lo svantaggio di richiedere l'installazione di sistemi di sviluppo software e non permettono quindi la visione dei bigrafi da sistemi che non possiedono del software dedicato né tantomeno la visione da sistemi \emph{mobile} o con potenza di calcolo limitata. Non è stato inoltre ancora sviluppato un formato che consenta la visualizzazione del bigrafo via Web: questa rappresenterebbe un'ottima soluzione in quanto consentirebbe di usufruire della rappresentazione grafica in un'ampia serie di dispositivi.
+
+Questo lavoro di tesi si propone di fornire una soluzione a questa problematica realizzando un sistema di visualizzazione web basato sulla libreria \emph{D3.js}\cite{Murray:2013:IDV:2544036}. La scelta è ricaduta su D3.js in quanto fornisce una serie di strumenti piuttosto potenti per creare visualizzazioni web legate a sorgenti di dati, dà la possibilità allo sviluppatore di modificare secondo le proprie esigenze i layout di base forniti e risulta inoltre, per le funzionalità offerte, non particolarmente \emph{``esosa"} in termine di risorse hardware permettendo il suo utilizzo anche su dispositivi mobili o con scarsa potenza di calcolo. Per realizzare la visualizzazione si è definita inoltre la struttura dati per la descrizione dei bigrafi mediante l'utilizzo del formato \emph{JSON} data l'ottima integrazione della libreria D3.js con questo formato; \emph{JSON} inoltre ha raggiunto una maturità e standardizzazione che ne permettono un utilizzo sicuro e stabile nel tempo. La tesi proporrà una soluzione che comprenderà tutte le tipologie di grafi che si possono incontrare utilizzando i bigrafi: \emph{place graph}, \emph{link graph} e \emph{bigrafo} come composizione di \emph{place graph} e \emph{link graph}.
+
+Questo volume è così suddiviso: il capitolo  2 presenta una rapida introduzione ai bigrafi sottolineando in particolar modo le relazioni tra proprietà dei bigrafi e loro rappresentazione schematica. Il capitolo 3 presenta un'analisi preliminare del progetto con la definizione dei requisiti del sistema e l'architettura di riferimento. Il capitolo 4 introduce la libreria D3.js e la tecnologia SVG per la realizzazione di grafica vettoriale passando poi ad una descrizione dell'implementazione del software e la visualizzazione dei risultati ottenuti. Nel capitolo 5 infine si sono tratte le conclusioni sull'intero lavoro svolto proponendo alcuni possibili sviluppi futuri.
+
+\chapter{Bigrafi}
+In questo capitolo si farà una rapida analisi dei bigrafi, analizzando rapidamente le caratteristiche di questo particolare tipo di grafi, gli elementi che lo compongono e la loro rappresentazione grafica. Non verranno trattati argomenti quali le operazioni sui bigrafi nè in generale l'algebra dei bigrafi in quanto non interessanti per le finalità del lavoro svolto.
+\section{Bigrafi e loro componenti}
+Un \emph{bigrafo} è un particolare tipo di grafo in cui i nodi che lo compongono possono essere annidati tra loro e gli archi che collegano i nodi sono \emph{iper-archi} ovvero consentono la connessione di un nodo di partenza a più nodi d'arrivo mediante l'utilizzo della stessa connessione. Pertanto, come il nome \emph{bi-grafo} suggerisce, abbiamo a che fare con una struttura composta da due grafi completamente indipendenti tra loro che veicolano informazioni differenti, quali topologia dei nodi e collegamenti tra nodi. Inoltre si possono definire diversi tipi di nodi con significato e caratteristiche diverse rendendo il bigrafo un \emph{metamodello} estremamente flessibile e utilizzabile in diversi contesti.
+\subsection{Tipologie di nodi}
+La grande capacità espressiva dei bigrafi rende possibile il loro utilizzo in diversi contesti, questo rende indispensabile definire dei significati e delle regole per ogni nodo. Per fare ciò si assegnano ad ogni nodo una segnatura e un controllo:
+\begin{define}[Segnatura e Controllo]
+Una segnatura è una coppia $(K , ar)$, dove $K$ è un insieme di tipi di nodi chiamati \emph{controlli}, e $ar: K \to \mathbb{N}$ è una mappa che associa ad ogni tipo di nodo (cioè ad ogni controllo) un numero naturale chiamato arietà.
+\end{define}
+\noindent
+Con \textbf{arietà} intendiamo il numero di porte (e quindi di connessioni possibili) assegnato ad ogni tipo di nodo.
+Con \textbf{controllo} si intende l'assegnazione ad ogni nodo un tipo che lo definisce. Ogni nodo ha quindi un solo controllo assegnato (si può notare una similitudine con la programmazione orientata agli oggetti ed alla relazione tra classe e istanze di classe). Questo è molto interessante ai fini del lavoro qui descritto perché  possiamo definire una primitiva grafica per ogni controllo (e quindi tipo di nodo) presente nel bigrafo.
+La coppia $(K , ar)$ definisce quindi in maniera completa ogni nodo presente nel bigrafo assegnandoli un controllo e l'arietà.
+\subsection{Place Graph}
+Il Place Graph è il grafico che specifica la topologia dei nodi e indica quindi come sono annidati i nodi. Il Place Graph può essere descritto come una foresta ed ogni albero della foresta ha come nodo iniziale la \emph{radice}(o \emph{regione}). Ogni radice è identificata da un numero che va da $0$ a $n-1$ dove $n$ è il numero di alberi. Ogni nodo può contenere un \emph{sito} che è un nodo particolare che può contenere al suo interno un altro Place Graph permettendo la composizione di Place Graph. In figura~\ref{rif:fig-bigrafoEplaceGraph} è possibile osservare un bigrafo e il relativo place graph.
+\begin{figure}[t]
+\begin{center}
+\subfloat[Bigrafo]{\includegraphics[scale = 0.5]{figure/bigraph}}\qquad
+\subfloat[Place graph]{\includegraphics[scale = 0.6]{figure/PlaceGraph}}
+\end{center}
+\caption{Esempio di bigrafo e relativo place graph.}
+\label{rif:fig-bigrafoEplaceGraph}
+\end{figure}
+Per permettere la composizione tra bigrafi definiamo l'interfaccia del place graph che è descritta da:
+ \begin{itemize}
+ \item \textbf{interfaccia esterna}: è descritta da un numero naturale $n$ che descrive il numero di \emph{radici} presenti nel place graph. In figura~\ref{rif:fig-bigrafoEplaceGraph} per esempio $n = 2$  (sono presenti 2 radici: $r_o , r_1$);
+ \item \textbf{interfaccia interna}: è descritta da un numero naturale $n$ che descrive il numero di \emph{siti} presenti nel place graph. In figura~\ref{rif:fig-bigrafoEplaceGraph} per esempio $n = 3$ (sono presenti 3 siti: $s_o , s_1 , s_2$).
+ \end{itemize}
+
+\subsection{Link Graph}
+Il link graph è un \emph{ipergrafo} (cioè un grafo i cui archi possono connettere più nodi) non orientato che descrive il collegamento fra i vari nodi del bigrafo. Il link graph descrive anche le le potenziali connessioni con altri bigrafi attraverso le \emph{interfacce}. L'interfaccia del link graph è descritta da \emph{interfaccia esterna} e \emph{interfaccia interna}:
+ \begin{itemize}
+ \item \textbf{interfaccia esterna}: è composta dagli \emph{outer names} che indicano le connessioni disponibili verso l'esterno offerte dal link graph: per convenzione sono poste nella parte superiore della rappresentazione grafica del link graph. In figura~\ref{rif:fig-linkgraph} l'interfaccia esterna è composta da $\{y_o,y_1,y_2\}$;
+ \item \textbf{interfaccia interna}: è composta dagli \emph{inner names} che indicano le connessioni disponibili verso l'interno offerte dal link graph: per convenzione sono poste nella parte inferiore della rappresentazione grafica del link graph. In figura~\ref{rif:fig-linkgraph} l'interfaccia interna è composta da $\{x_o,x_1\}$.
+ \end{itemize}
+In figura~\ref{rif:fig-linkgraph} si può vedere il link graph relativo al bigrafo della figura~\ref{rif:fig-bigrafoEplaceGraph} con outer names e inner names.
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale =  0.75]{figure/linkgraph}
+\caption{Link graph del bigrafo in figura~\ref{rif:fig-bigrafoEplaceGraph}}\label{rif:fig-linkgraph}
+\end{figure}
+\subsection{Bigrafo}
+Il bigrafo non è altro che l'unione di place graph e link graph. È importante notare che i 2 grafi condividono lo stesso insieme di nodi. I bigrafi vengono spesso descritti attraverso l'interfaccia che li caratterizza, un generico bigrafo B ad esempio è composto da:
+\begin{center}
+$B = \langle n, X \rangle \to \langle m, Y \rangle$
+\end{center}
+stando ad indicare che $B$ ha $n$ siti, $X$ inner names, $m$ radici e $Y$ outer names.\\
+Il bigrafo in figura~\ref{rif:fig-bigrafoEplaceGraph} sarà quindi descritto dalla seguente interfaccia:
+\begin{center}
+$B = \langle 3, \{x_0,x_1\} \rangle \to \langle 2, \{y_o,y_1,y_2 \} \rangle$
+\end{center}
+\subsection{Composizione tra Bigrafi}
+I bigrafi nascono come strutture composizionali: è possibile definire bigrafi minimali e tramite operazioni di composizione definire bigrafi via via più estesi e complessi. L'operazione di composizione è possibile grazie alla presenza dei \emph{siti} ovvero una particolare classe di nodi in cui è possibile inserire altri bigrafi. Non è però possibile inserire qualsiasi bigrafo: considerando due bigrafi $A$ e $B$ l'operazione di composizione $B\circ A$ è possibile se solo se l'interfaccia interna di $B$ è uguale all'interfaccia esterna di $A$. Quindi, in generale se $A:I \to J$ e  $B:J \to K$ sono due bigrafi con nodi e grafi disgiunti, dove $I = \langle k,X \rangle$, $J = \langle m,Y \rangle$, $K = \langle n,Z \rangle$ allora il bigrafo composto $B\circ A : I \to K $ non è altro che il risultato della coppia di composizioni $\langle A^P\circ B^P,  A^L\circ B^L\rangle$ i cui componenti sono creati come segue :
+\begin {itemize}
+\item per la creazione del place graph $A^P\circ B^P : k \to n$, per ogni $i\in m$ si unisce l'iesima radice di $B^P$ con l'iesimo sito di $A^P$;
+\item per la creazione del link graph $A^L\circ B^L : X \to Z$, per ogni $y\in Y$ si collega  il link di $B^L$ con outer name $y$ con il link di $A^L$ con inner name $y$.
+\end {itemize}
+In questo modo i due bigrafi di partenza $B$ e $A$ si compongono in un unico bigrafo attraverso i nodi e i collegamenti messi in relazione dall'interfaccia comune $J$ che cessa di esistere.\\
+Per esemplificare il tutto consideriamo il bigrafi in figura~\ref{rif:fig-bigrafiComponenti}: l'operazione di composizione dei 2 bigrafi $C$ e $D$ genera il bigrafo $B$ presente in figura~\ref{rif:fig-bigrafoComposto}. Descriviamo con la notazione precedente definita i 2 bigrafi $C$ e $D$:
+\begin {center}
+$D = \langle 2, \{z_0,z_1\} \rangle \to \langle 2, \{y_o,y_1,y_2 \} \rangle$
+
+$C = \langle 3, \{x_0,x_1\} \rangle \to \langle 2, \{z_o,z_1\} \rangle$
+\end {center}
+Il risultato della composizione $D\circ C$ sarà uguale a:
+\begin {center}
+$B = D\circ C = \langle 3, \{x_0,x_1\} \rangle \to \langle 2, \{y_o,y_1,y_2 \} \rangle$
+\end {center}
+Si noti come l'interfaccia in comune tra $C$ e $D$ permetta la composizione dei 2 bigrafi e la sua scomparsa al termine dell'operazione stessa.
+%Definiamo innanzitutto le condizioni di disgiunzione di \emph{place graph}, \emph{link graph} e dei \emph{bigrafi}:  
+%\begin{itemize}
+%\item i place graph $F_i(i = 0,1)$ si dicono disgiunti se $\vert F_0\vert \# \vert F_1\vert$ ovvero $\vert F_0\vert \cap \vert F_1\vert = \emptyset$;
+%\item i link graph $F_i(i = 0,1)$ con $F_i : X_i \to Y_i$ si dicono disgiunti se  $X_0 \# X_1$, $Y_0 \# Y_1$ e $\vert F_0\vert \# \vert F_1\vert$;
+%\item Due bigrafi si dicono \emph{disgiunti} se $F_0^P \#F_1^P$ e $F_0^L \#F_1^L$.%
+%\end{itemize}
+
+%bigrafi componenti
+\begin{figure}[!h]
+\begin{center}
+\subfloat[Bigrafo $D$]{\includegraphics[scale = 0.35]{figure/bigraphD}}\qquad
+\subfloat[Bigrafo $C$]{\includegraphics[scale = 0.35]{figure/bigraphC}}
+\end{center}
+\caption{Bigrafi $C$ e $D$ che compongono il bigrafo di figura~\ref{rif:fig-bigrafoComposto}}
+\label{rif:fig-bigrafiComponenti}
+\end{figure}
+%bigrafo composto
+\begin{figure}[!t]
+\begin{center}
+\includegraphics[scale = 0.5]{figure/bigraph}
+\caption{Bigrafo $B$ risultante dall'operazione di composizione  $D\circ C$ }
+\label{rif:fig-bigrafoComposto}
+\end{center}
+\end{figure}
+%prodotto o giustapposizione 
+\subsection {Giustapposizione di Bigrafi}
+Definiamo ora un'altra operazione per creare un bigrafo da altri 2 bigrafi di base. Si chiama \emph{giustapposizione} o \emph{prodotto} di bigrafi e consiste nell'affiancare un bigrafo ad un altro. Questa operazione è possibile solo se i due bigrafi sono \emph{disgiunti}. Definiamo ora quando due bigrafi sono \emph{disgiunti}:
+
+%def. bigrafi disgiunti
+\begin{center}
+$F_i : \langle m_i, X_i \rangle \to \langle n_i, Y_i \rangle (i = 0,1)$ 
+\end{center}
+si dicono \emph{disgiunti} se $\vert F\vert$, $X_i$ e $Y_i$ sono (rispettivamente) fra loro disgiunti.
+
+Dati due bigrafi disgiunti: 
+\begin {center}
+$F: \langle m_F, X_F \rangle \to \langle n_F, Y_F \rangle$, $G : \langle m_G, X_G \rangle \to \langle n_G, Y_G \rangle$
+\end {center}
+la \emph{giustapposizione} o \emph{prodotto} $F \otimes G: \langle m_F+m_G, X_F\uplus X_G \rangle \to \langle n_F+n_G, Y_F\uplus Y_G \rangle$ è il bigrafo:
+\begin {center}
+$F \otimes G: (V_F\uplus V_G, E_F\uplus E_G, ctrl_F\uplus ctrl_G, prnt_F \uplus prnt_G^{'}, link_F \uplus link_G)$
+\end {center}
+dove $prnt_G^{'}(m_F + i) = n_F + j$ ogni volta che $prnt_G(i) = j$.
+\chapter{Analisi e Progetto}
+In questo capitolo sarà presentata l'analisi preliminare svolta per la realizzazione del sistema software. Si prenderanno in esame la definizione dei requisiti del progetto e si fornirà un'architettura di riferimento per la realizzazione del nostro sistema software analizzando in dettaglio le funzioni di ogni singolo modulo e la interazione tra moduli.
+%% Sezione
+\section{Definizione dei Requisiti}
+In questa fase iniziale nello sviluppo del sistema software ci si è focalizzati su quelli che erano i principali bisogni degli utenti del nostro sistema, giungendo alla stesura di una serie di requisiti:
+ \begin{itemize}
+ \item Il sistema software deve fornire un mezzo per rappresentare e visualizzare i \emph{bigrafi} opportunamente descritti da appositi file XML o JSON;
+ \item deve utilizzare gli elementi grafici e lo stile di rappresentazione dei \emph{bigrafi} utilizzato in letteratura; 
+ \item deve essere in grado di visualizzare in un'unica schermata i vari grafici che compongono i \emph{bigrafi}, quindi i \emph{place graph} e i \emph{link graph} e il bigrafo nel suo complesso;
+ \item deve utilizzare come strumento di visualizzazione un moderno browser web;
+ \item deve poter permettere l'interazione dell'utente con il grafico realizzato permettendo azioni come \emph{zoom}, trascinamento degli elementi grafici che compongono il grafico (\emph{dragging}) e loro blocco all'interno dell'area di visualizzazione (\emph{pinning}).
+ \item la sua esecuzione non deve essere computazionalmente dispendiosa (sia lato client che lato server) in modo da permettere l'utilizzo del sistema anche attraverso hardware datato e dispositivi mobili (tablet e smartphone).
+ \end{itemize}
+ Fin dalla prima fase di definizione dei requisiti utenti si è capito che il software non doveva limitarsi ad una semplice visualizzazione della rappresentazione grafica del modello ma permettere una interazione tra utente e la rappresentazione grafica influenzando le scelte progettuali successive. 
+%% Sezione
+\section{Progetto: architettura di riferimento}
+ La definizione dei requisiti dell'utente ha naturalmente influito nella definizione dei requisiti del sistema indirizzando innanzitutto le scelte architetturali del sistema, successivamente la scelta degli strumenti software più adatti alla realizzazione dello stesso.
+ Fino dalle fasi iniziali della stesura dei requisiti software è parso naturale scegliere come architettura di riferimento per il nostro sistema quella \textbf{Two-Tier} (figura \ref{fig:Two Tier}) (\emph{``a 2 strati"} comunemente chiamata Client-Server) con \textbf{Fat Client} ovvero quella tipologia di client che contiene oltre alla visualizzazione e interazione con l'utente anche la parte relativa all'applicazione.
+ Il modello \emph{Two -Tier} è un pattern architetturale che prevede, per l'appunto, la suddivisione in 2 strati (detti \emph{layer}) della nostra applicazione in cui ogni strato si occupa di un preciso aspetto all'interno dell'applicazione. I layer sono:
+\begin{enumerate}
+\item il \textbf{Presentation layer \& Application processing} ovvero lo strato che si occupa di fornire le funzionalità richieste all'applicazione, della presentazione dei risultati della computazione all'utilizzatore del sistema e della interazione dell'utente con essa collezionando gli input dell'utente;
+\item il \textbf{Data management layer} ovvero lo strato che gestisce i dati persistenti della nostra applicazione.
+\end{enumerate} 
+\begin{figure}[t]
+\centering
+\includegraphics[scale =  0.75]{figure/EsTwoTier}
+\caption{Esempio di sistema Two-Tier}\label{fig:Two Tier}
+\end{figure}
+%% Sottosezione
+\subsection{Descrizione dei moduli}
+ Si procede ora nella descrizione dettagliata di ogni singolo layer.
+ %%
+\subsubsection{Presentation \& Application Layer}
+È il layer fondamentale della nostra applicazione, in quanto si occupa delle operazioni fondamentali del nostro programma:
+\begin{itemize}
+\item richiesta e ricezione via \emph{HTTP} (HyperText Transfer Protocol) del file contenente la struttura dati in cui è descritto il bigrafo;
+\item parsing del file ricevuto e estrapolazione dei dati;
+\item creazione di una pagina \emph{HTML} (HyperText Markup Language) con visualizzazione del bigrafo attraverso l'uso di \emph{SVG} (Scalable Vector Graphics);
+\item offrire la possibilità all'utente di interagire con la rappresentazione grafica spostando gli elementi SVG liberamente nell'area di visualizzazione. 
+\end{itemize}
+Dato il numero di operazioni svolte e la necessità di non gravare eccessivamente sulle risorse del client si è scelto di utilizzare il linguaggio \emph{Javascript} che sin dalla sua nascita ha rappresentato il linguaggio più utilizzato nello scripting lato client e per la creazione della visualizzazione SVG di utilizzare una delle molteplici librerie di visualizzazione dati disponibili sul mercato quest'oggi. Per gli aspetti implementativi si veda il capitolo~\ref{cap:rif-cap4}.
+
+\subsubsection{Data Management Layer}
+È il layer che fornisce all'applicazione i file opportunamente formattati che veicolano le informazioni relative ai bigrafi. È realizzato tramite un comune server web. All'atto del caricamento della pagina su client quest'ultimo invia una richiesta via HTTP di accesso al file che descrive la struttura del bigrafo da visualizzare, il server web processa la richiesta e risponde con l'invio del file desiderato.
+
+\subsection{Descrizione della comunicazione tra moduli}
+Viene di seguito brevemente descritto il meccanismo di comunicazione tra i moduli che compongono l'architettura software realizzata.
+\subsubsection{Richiesta del client}
+Al caricamento della pagina web di visualizzazione del bigrafo il client invia una richiesta asincrona HTTP/GET con il reclamo della specifica risorsa al server. Javascript offre la possibilità di effettuare facilmente la richiesta di accesso al file remoto mediante l'utilizzo della funzione $XMLHttpRequest$, analizziamo brevemente la struttura di una generica richiesta HTTP/GET:
+\begin{lstlisting}
+var xmlhttp = new XMLHttpRequest();
+xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        var myObj = JSON.parse(this.responseText);
+        document.getElementById("demo").innerHTML = myObj.name;
+    }
+};
+xmlhttp.open("GET", "json_demo.json", true);
+xmlhttp.send(); 
+\end{lstlisting}
+
+allo scatenarsi dell'evento $onreadystatechange$ la funzione di callback verifica che lo status della richiesta sia quello voluto; verificato ciò si occupa di manipolare i dati ricevuti dalla richiesta. In figura~\ref{fig:TwoTier} viene illustrato il semplice schema di funzionamento della richiesta dei dati al server web.
+\begin{figure}[t]
+\centering
+\includegraphics[scale =  0.60]{figure/TwoTier}
+\caption{Schema di richiesta risorse }\label{fig:TwoTier}
+\end{figure}
+\let\Oldsubsubsection\subsubsection
+\renewcommand{\subsubsection}{\FloatBarrier\Oldsubsubsection}
+
+\begin{figure}[t]
+\centering
+\includegraphics[scale =  0.60]{figure/TwoTierRec}
+\caption{Schema di ricezione risorse }\label{fig:TwoTierRec}
+\end{figure}
+
+\subsubsection{Risposta del server}
+Il server ricevuta la richiesta invio del file richiesto dal client provvederà alla sua ricerca su disco e al suo invio mediante HTTP. Il client alla ricezione dei dati, codificati in \emph{JSON} o \emph{XML}, eseguirà la funzione di callback con le relative operazioni di estrapolazione dei dati. Il client dovrà successivamente provvedere all'estrapolazione dei dati e alla creazione della pagina \emph{HTML} contenente la visualizzazione del bigrafo. La figura~\ref{fig:TwoTierRec} illustra schematicamente il processo di ricezione dei dati.
+%Implementazione
+\chapter{Implementazione}
+\label{cap:rif-cap4}
+In questo capitolo sarà presentata l'implementazione del software di visualizzazione, descrivendo in dettaglio le scelte implementative, gli strumenti utilizzati, la tecnologia SVG, la struttura dati di riferimento e le visualizzazioni create.
+%D3.js
+\section{Motore di rendering}
+Come già accennato nel capitolo precedente, in fase di analisi è stato necessario scegliere tra diversi strumenti di creazione e visualizzazione di grafi. Vista la crescente popolarità dell'infografica in diversi ambiti che vanno dall'editoria tradizionale al web sono state sviluppate diverse librerie per lo sviluppo di questa tipologia di visualizzazioni. La specificità dei bigrafi ha però presentato difficoltà insormontabili per la maggior parte delle librerie prese in esame: la quasi totalità di esse non permette una profonda customizzazione delle visualizzazioni fornite di default e il bigrafo in quanto risultato della composizione di link graph e place graph rappresenta un ibrido non realizzabile da molte delle librerie che sono state oggetto della valutazione.
+
+A seguito di un'attenta analisi la scelta è ricaduta sulla libreria \textbf{D3.js} in particolare per i seguenti motivi:
+\begin{itemize}
+\item libreria matura ma al contempo in costante aggiornamento;
+\item possibilità di customizzare i layout di default dando grande libertà espressiva all'utilizzatore;
+\item rendering dei grafici mediante l'utilizzo di tecnologia \emph{SVG} e \emph{Canvas};
+\item ottima integrazione con \emph{JSON} e \emph{XML};
+\item funzioni per la selezione e interazione con gli elementi del \emph{DOM} (Document Object Model) che non richiede l'utilizzo di altre librerie come \emph{jQuery}.
+\end{itemize}
+Analizziamo ora nel dettaglio la libreria e le funzionalità che mette a disposizione dell'utilizzatore.
+
+\textbf{D3.js} (abbreviazione di \textbf{Data-Driven Document}) è una libreria \emph{Javascript} utilizzata per produrre visualizzazioni grafiche interattive basate su dati. Nasce nel 2011 dalle ceneri di \textbf{Protovis} per mano di Mike Bostock, dottorando all'università di Stanford, e del Stanford Visualization Group col fine di fornire una libreria altamente customizzabile per la visualizzazione di dati attraverso un moderno browser Web. Negli ultimi anni ha conosciuto una rapida diffusione diventando una delle librerie di riferimento per la visualizzazione di dati: molte aziende utilizzano D3 all'interno dei loro prodotti software e colossi editoriali come \emph{New York Times}\footnote{ad esempio: http://www.nytimes.com/interactive/2012/02/13/us/politics/2013-budget-proposal-graphic.html} e \emph{Guardian}\footnote{ad esempio https://www.theguardian.com/world/interactive/2013/feb/12/state-of-the-union-reading-level} utilizzano D3 per la realizzazione di complesse infografiche visibili nei loro siti internet.
+
+La libreria attualmente ha raggiunto una notevole stabilità e viene costantemente aggiornata (attualmente ha raggiunto la versione 4.13.0 ed è in RC la nuova versione 5) inoltre possiede una solida comunità di utilizzatori e sviluppatori che rilasciano costantemente nuovi pacchetti di visualizzazione o nuovi metodi creativi di utilizzazione delle capacità della libreria D3.
+
+\subsection{Caratteristiche di D3.js}
+La libreria D3 incorpora in una pagina \textbf{HTML} una serie di funzioni \emph{Javascript} che permettono la selezione di elementi del \textbf{DOM}, creare elementi \emph{SVG}, aggiungergli uno stile grafico, ed anche effetti come transizioni e animazioni. Questo permette di creare molto rapidamente, passando collezioni di dati alla libreria, rappresentazioni grafiche di molteplici tipi. La forza della libreria è inoltre quella di permettere la customizzazione delle visualizzazioni di default permettendo la creazione di rappresentazioni grafiche sempre nuove.
+Si analizza ora qualche aspetto interessante della libreria D3.js
+\subsection{D3.js Selezioni}
+Similmente a \emph{jQuery}, D3 consente di creare o selezionare gli elementi del DOM e manipolarli in vario modo. Se ad esempio volessimo selezionare tutti gli elementi $g$ contenuti nella pagina HTML e creare al loro interno un cerchio rosso con raggio 5px e con posizione random sarebbe sufficiente eseguire il codice seguente:
+ \begin{lstlisting}
+d3.selectAll("g")
+    .append("circle")
+    .attr("r",5)
+    .attr("x",D3.randomUniform(0,length))
+    .attr("y",D3.randomUniform(0,height))
+    .style("fill","red");
+\end{lstlisting}
+Il selettore $D3.selectAll$ provvederà alla selezione di ogni elemento $g$ presente nel \emph{DOM} e per ogni elemento selezionato applicherà le istruzioni che seguono il selettore. Altra particolarità da notare è la caratteristica concatenazione (chaining) dei metodi invocati tipica di \emph{jQuery} e utilizzata anche da D3.
+\subsection{D3.js Data Binding }
+Punto di forza principale di D3.js è la capacità di caricare dei dati e tramite essi creare elementi grafici. Ad esempio è possibile caricare un set di dati e per ogni elemento del set creare un oggetto SVG con associate delle proprietà (ad esempio forma, colore ecc...) dipendenti da aspetti significativi dei dati caricati. Riprendendo l'esempio precedente passiamo a D3 un semplice array di numeri  $array = [10,15,18,30,23]$ variamo il raggio del cerchio in relazione al numero passato:
+ \begin{lstlisting}
+d3.selectAll("circle")
+    .data(array)
+    .enter()
+    .append("circle")
+    .attr("r",function(d){return d;})
+    .attr("x",D3.randomUniform(0,length))
+    .attr("y",D3.randomUniform(0,height))
+    .style("fill","red");
+\end{lstlisting}
+Per ogni elemento dell'array verranno eseguite le istruzioni successive al suo caricamento (determinato dall'istruzione $enter$), verranno quindi creati 5 cerchi rossi con raggio dipendente dal valore di ogni singolo elemento dell'array.
+\subsection{D3.js e i Layout}
+Al fine di rendere più comodo l'utilizzo della libreria, D3 mette a disposizione dell'utilizzatore dei \emph{layout} di default che permettono la creazione di visualizzazioni complesse velocemente e facilmente. Per la realizzazione del progetto di tesi si sono usati due layout: \emph{d3.tree} per la visualizzazione della struttura ad albero del place graph e \emph{d3.forceLayout} per la realizzazione del link graph e del bigrafo. 
+\subsection{D3.js version 4}
+Nel corso del 2016 D3.js è stato aggiornato alla versione 4 che ha portato ad una rivisitazione di molti aspetti della libreria tra i più interessanti il fatto che  la libreria non è più monolitica ma è stata riorganizzata in un insieme di pacchetti che permettono di caricare solo le funzionalità della libreria che si utilizzano rendendo il caricamento e l'esecuzione del codice molto più veloce. Ogni singolo pacchetto può essere scaricato utilizzando il gestore di pacchetti di \textbf{Node.js} \emph{npm} (node package manager) oppure inserendo manualmente nello script il riferimento remoto al pacchetto (facendo attenzione alle dipendenze tra pacchetti).
+%SVG
+\section{SVG - Scalable Vector Graphics}
+\textbf{SVG} (acronimo di \emph{Scalable Vector Graphics}) è un linguaggio basato su \textbf{XML} sviluppato dal \textbf{W3C} (\emph{World Wide Web Consortium}) per descrivere grafica 2D vettoriale. Ha conosciuto una gestazione piuttosto travagliata dovuta dal fatto che multinazionali come Microsoft e Macromedia avevano introdotto all'interno del W3C il linguaggio \textbf{VML}( \emph{Vector Markup Language}) mentre Adobe e Sun Microsystem proponevano un linguaggio alternativo chiamato \textbf{PGML}( \emph{Precision Graphics Markup Language}): SVG nasce dunque come compromesso tra 2 linguaggi differenti. Lo sviluppo di \textbf{SVG} è iniziato nel 1999 e la prima raccomandazione del W3C relativa all'uso del linguaggio \textbf{SVG1.0}\footnote{La prima Recommendation del W3C di SVG 1.0 e visibile al link https://www.w3.org/TR/2001/REC-SVG-20010904/} è del 4 settembre 2001. L'ultima versione del linguaggio \textbf{SVG1.1 Second Edition}\footnote{La Recommendation del W3C di SVG 1.1 è visibile al link https://www.w3.org/TR/SVG11/} è del 16 agosto 2011. Una versione 2.0 è attualmente in sviluppo\footnote{Attualmente è visibile una Candidate Recommendation di SVG 2.0 al link https://www.w3.org/TR/SVG2/}.
+A oltre 15 anni dal suo primo rilascio \textbf{SVG} ha finalmente raggiunto un ottimo supporto da parte di tutti i principali Browser Web, rimangono criticità che riguardano sistemi che utilizzano versioni di browser \emph{Internet Explorer} inferiori alla 11 e sistemi \emph{Android} con versione inferiore alla 4 e che usano il browser di default.
+\subsection{Caratteristiche di SVG}
+\textbf{SVG} visualizza 3 tipi di oggetti:
+\begin{enumerate}
+\item \textbf{Immagini vettoriali}: ovvero l'immagine è descritta mediante l'uso di primitive geometriche che definiscono punti, linee, curve, poligoni a cui possono essere attribuiti colori, sfumature ecc... In caso di operazioni di ridimensionamento dello schermo l'immagine viene ridisegnata non generando alcun tipo di perdita di dettaglio;
+\item \textbf{Immagini raster}: l'immagine viene vista come una griglia, ad ogni pixel (singolo elemento della griglia) viene assegnato un colore: in caso di operazioni di ingrandimento dell'immagine quest'ultima risulterà sgranata;
+\item \textbf{Testi esplicativi} eventualmente cliccabili. 
+\end{enumerate}
+\emph{SVG} consente di operare sugli elementi sopraelencati in vario modo raggruppandoli, modificando le caratteristiche grafiche, operando trasformazioni (creando quindi animazioni), e altro ma non dispone di uno $z-index$: non è possibile quindi determinare il livello di profondità degli oggetti disegnati (quindi l'ordine in cui vengono disegnati gli oggetti a schermo determina il risultato finale).
+\subsection{Gestione dell'aspetto del contenuto SVG}
+\emph{SVG} consente diversi modi di gestire l'aspetto visuale degli elementi definiti al suo interno. I metodi generalmente utilizzati sono:
+\begin{enumerate}
+\item{definire l'aspetto visuale per ogni elemento SVG}: ogni elemento possiede gli opportuni campi per la definizione dello stile;
+\item{ottenere un SVG attraverso XML e XSLT}: attraverso l'uso di XSLT (\emph{eXtensible Stylesheet Language Transformations}) possiamo trasformare un documento XML in SVG che risulterà graficamente definito (a patto che XSLT sia completo di ogni descrizione necessaria alla completa trasformazione);
+\item{definire l'aspetto attraverso CSS}: è possibile, come per l'HTML definire fogli di stile per gli elementi SVG.
+\end{enumerate}
+Tutte le 3 alternative presentano dei vantaggi e degli svantaggi: ad esempio definire l'aspetto grafico di ogni elemento rende certa la portabilità dello stesso in quanto tutte le informazioni sono contenute nell'SVG ma, per grafiche di una certa complessità comporta un aumento delle dimensioni del file. D'inverso definire lo stile tramite CSS comporta una riduzione delle dimensioni del file oltre a semplificare la gestione della definizione dello stile (uso di classi, id ecc...) ma necessita che il foglio di stile, se non già integrato nella pagina venga fornito insieme alla pagina HTML che contiene SVG.
+%%Implementazione
+\section {Descrizione dell'implementazione}
+Nei paragrafi successivi vengono illustrate le scelte effettuate per la creazione della struttura dati che descrive i bigrafi e le tecniche utilizzate per la creazione delle visualizzazioni dei Place Graph, Link Graph e dei bigrafi.
+\subsection{Definizione della Struttura Dati}
+Il primo passo nella realizzazione del sistema software è stato quello di definire la struttura dati per la corretta descrizione dei bigrafi da rappresentare. 
+Per prima cosa si è scelto di utilizzare la codifica \emph{JSON} (acronimo di JavaScript Object Notation) in quanto tecnologia ben integrata con la libreria D3, successivamente si è cercato il miglior modo di strutturare i dati per rappresentare le caratteristiche essenziali dei bigrafi. Si illustrano ora le codifiche di ogni singolo aspetto interessante dei bigrafi.
+\subsubsection{Codifica dell'Interfaccia}
+Per codificare l'interfaccia si è deciso di creare una coppia di array in cui vengono inseriti rispettivamente gli elementi atti a descrivere \emph{inner names} e \emph{outer names}.
+\begin{figure}[htbp]
+\begin{lstlisting}
+"interface":[
+	{"inner":["in1","in2","in3"]},
+	{"outer":["out1","out2"]}
+]
+\end{lstlisting}
+\caption{Rappresentazione dell'interfaccia in JSON}
+\label{fig:rif-cap4-interface-data-struct}
+\end{figure}
+\subsubsection {Codifica della Signature}
+A differenza di quanto illustrato nel Capitolo 1 e previsto dalla teoria dei bigrafi la codifica della \emph{Signature} è stata strutturata per non prevedere una definizione dell'arità dei nodi ma definisce la loro rappresentazione grafica descrivendo forma e colore dell'elemento visualizzato. Oltre alle primitive grafiche previste dal SVG (\emph{circle, ellipse,rect}) si è offerta anche la possibilità di creare anche poligoni regolari per arricchire le possibilità di visualizzazione dei bigrafi.
+\begin{figure}[htbp]
+\begin{lstlisting}
+"signature":[
+	{"id":"site","shape":"rect","color":"grey"},
+	{"id":"root","shape":"rect","color":"white"},
+	{"id":"node","shape":"ellipse","color":"white"},
+	{"id":"leaf","shape":"circle","color":"white"},
+	{"id":"user","shape":"polygon","sides":"3","color":"white"},
+	{"id":"user2","shape":"polygon","sides":"5","color":"white"}
+]
+\end{lstlisting}
+\caption{Rappresentazione della Signature in JSON}
+\label{fig:rif-cap4-signature-data-struct}
+\end{figure}
+
+\subsubsection{Codifica dei Nodi}
+Per la definizione dei nodi si è scelto di utilizzare la codifica standard utilizzata da D3.js per descrivere strutture gerarchiche (ad esempio per la visualizzazione di strutture ad albero). Questa scelta è stata particolarmente utile perché ha poi permesso l'utilizzo di tutta una serie di metodi offerti dalla libreria quali ad esempio la possibilità di conoscere il numero di discendenti di un dato nodo. La codifica ricalca quella illustrata in figura~\ref{fig:rif-cap4-data-struct}.
+\subsubsection{Codifica dei Collegamenti}
+La codifica dei collegamenti è stata influenzata dalla necessita di descrivere anche i collegamenti a ipergrafo. La libreria D3 non dispone di questo tipo di collegamento (la libreria si limita a definire connessioni a grafo semplice tra 2 nodi codificandole con la notazione \emph{``source"},\emph{``target"}) e la codifica generalmente utilizzata dalla libreria non soddisfa i requisiti del progetto. Per descrivere il collegamento a ipergrafo si è deciso di descrivere i nodi raggiunti da un collegamento mediante la creazione di un array di nodi: ad esempio ogni nodo raggiunto dal collegamento \emph{c} sarà inserito nell'array che lo descrive. In figura~\ref{fig:rif-cap4-link-struct} viene illustrato il codice JSON che descrive i vari collegamenti, per omogeneità anche i collegamenti che interessano solo 2 nodi sono descritti con la stessa notazione.
+\begin{figure}[htbp]
+\begin{lstlisting}
+"links":
+[
+	["server1900","server992","server999"],
+	["server984","server983"],
+	["server984","server999","server911","server946","server913","server912"]
+]
+\end{lstlisting}
+\caption{Rappresentazione dei collegamenti in JSON}
+\label{fig:rif-cap4-link-struct}
+\end{figure}
+\subsection{Codifica e visualizzazione del Place Graph}
+Per la visualizzazione dei Place Graph si è fatto uso, vista la disponibilità di numerosi pacchetti di visualizzazione di strutture dati gerarchiche e alberi, di una visualizzazione fornita dalla libreria D3. In particolare si è fatto uso del \emph{layout} \textbf{D3.tree} che permette di creare con facilità la visualizzazione ad albero di una struttura dati propriamente formattata. 
+
+I dati codificati in \emph{JSON}  hanno la struttura illustrata in figura~\ref{fig:rif-cap4-data-struct}; si noti come ogni nodo padre possiede un array di nodi figli al suo interno, le foglie dell'albero invece presentano il solo attributo \emph{name} che li identifica.
+\begin{figure}[t]
+\begin{lstlisting}
+{
+  "name": "Eve",
+  "children": [
+    {
+      "name": "Cain"
+    },
+    {
+      "name": "Seth",
+      "children": [
+        {
+          "name": "Enos"
+        },
+        {
+          "name": "Noam"
+        }
+      ]
+    }
+    ...
+   \end{lstlisting}
+\caption{Esempio di codifica di struttura dati gerarchica in JSON }
+\label{fig:rif-cap4-data-struct}
+\end{figure}
+Una struttura dati di questo tipo passata a D3 comporta la creazione da parte della libreria di oggetti \emph{nodo} per ogni elemento della struttura dati con al loro interno diversi attributi come l'altezza del nodo, la sua profondità, il suo ID, la sua posizione nello schermo e altro ancora facilitando la creazione della visualizzazione dell'albero. Ad esempio in figura~\ref{fig:rif-cap4-datatoD3} viene illustrato come per ogni nodo caricato dal file JSON viene calcolata la sua posizione a schermo (regolata attraverso il campo \emph{attribute} del tag HTML \emph{g} che lo contiene: questo viene fatto prima per ogni nodo radice (che viene restituito dalla funzione \emph{d3.hierarchy}) e successivamente per ogni nodo discendente.
+\begin{figure}[htbp]
+\begin{lstlisting}
+var nodes = treeData.nodes;
+  nodes.forEach(function(d){
+	var shift =  (margin.top+(height/nodes.length)*index);
+	var  g = svg.append("g")
+	  .attr("transform", "translate(" + margin.left + "," + shift + ")");
+	index++;   
+	var tree = d3.tree()
+      	.size([height/nodes.length,width]);
+      	var root = d3.hierarchy(d);
+      	tree(root);
+
+	var node = g.selectAll(".node")
+      	.data(root.descendants())
+      	.enter().append("g")
+      	.attr("class", function(d) { return "node" + (d.children ? " node--internal" : " node--leaf"); })
+      	.attr("transform", function(d) { 
+        		return "translate(" + d.y + "," + d.x + ")"; 
+      });
+\end{lstlisting}
+\caption{Parte del codice di realizzazione dell'albero con D3.js}
+\label{fig:rif-cap4-datatoD3}
+\end{figure}
+Il risultato ottenuto è visualizzato in figura~\ref{fig:rif-cap4-Tree}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale =  0.60]{figure/TreeCap4}
+\caption{Visualizzazione dell'albero}\label{fig:rif-cap4-Tree}
+\end{figure}
+\let\Oldsubsection\subsection
+\renewcommand{\subsection}{\FloatBarrier\Oldsubsection}
+
+\subsection{Codifica e visualizzazione del Link Graph}
+La visualizzazione del Link Graph si è rivelata particolarmente impegnativa in quanto la libreria D3 non ha ancora sviluppato la possibilità di creare collegamenti tra nodi attraverso l'uso di \textbf{ipergrafi}. Un \emph{ipergrafo} è una coppia $(V,E)$ ove $V$ è un insieme finito ed $E$ è un insieme di sottoinsiemi di $V$ di ogni cardinalità (quindi non necessariamente 2). Ad esempio se consideriamo la coppia di insiemi $(V,E)$:
+ \[ V = \{v_1,v_2,v_3,v_4\} \quad E = \{\{v_1,v_2\},\{v_2,v_3,v_4\},\{v_3\}\} \]
+ avremo come risultato l'ipergrafo in figura~\ref{fig:rif-cap4-Hyper1}
+\begin{figure}[t]
+\centering
+\includegraphics[scale =  1]{figure/Hyper1}
+\caption{Esempio di ipergrafo}\label{fig:rif-cap4-Hyper1}
+\end{figure}
+Per ovviare all'assenza di una primitiva offerta dalla libreria è stato realizzato un pacchetto per la creazione di collegamenti con \emph{ipergrafo}. Per realizzare la connessione si è resa necessaria la creazione di una nuova classe di nodi detti \emph{``di collegamento"}: è stata verificata ad ogni sottoinsieme $e$ la condizione $e \in E : |e| > 2$ : se la condizione è vera allora un nodo \emph{"di collegamento"} viene aggiunto al sottoinsieme di nodi $e$ e viene creato un collegamento a grafo generico che la libreria \emph{D3} fornisce tra i nodi contenuti in $e$ e il nodo \emph{``di collegamento"}. Il riconoscimento di questa classe di nodi \emph{``di collegamento"} permette successivamente un differente stile di visualizzazione da parte della libreria creando l'effetto di collegamento con \emph{``ipergrafo"}. Il codice in figura~\ref{sec:rif-cap4-hypercode} illustra quanto descritto precedentemente.
+\begin{figure}[t]
+\begin{lstlisting}
+links.forEach(function(d) {
+	//if link length >2 there's an Hyperlink: i need to create a connection node
+	if (d.length > 2) {
+	//connection node id creation
+		var	id = 'ln';
+		for(k = 0; k < d.length; k++) {
+			id += d[k];
+		}
+	//connection node creation
+		i = {id: id,link: true};
+	//add the connection node to the node array
+		nodes.push(i);
+	//creation of the link from every node of the connection set to the connection node
+		for (j = 0; j < d.length; j++) {
+			hyper.push({source: d[j], target: i.id});
+		}
+	}else{
+	//if link < 2 then the connection is the traditional one w/o connection node
+		hyper.push({source: d[0],target: d[1]});
+	}
+});
+\end{lstlisting}
+\caption{Parte del codice per la realizzazione del pacchetto D3-hypergraph}
+\label{sec:rif-cap4-hypercode}
+\end{figure}
+
+Il pacchetto \textbf{D3-hypergraph} realizzato per questo lavoro è al momento l'unica proposta di collegamento con \emph{ipergrafi} all'interno della libreria D3.js. Il pacchetto è stato reso pubblico ed è scaricabile\footnote{Per scaricare il pacchetto visitare la pagina https://github.com/AndreaSimeone/d3-hypergraph oppure cercare \emph{D3-hypergraph} tramite \textbf{npm} (node package manager)} ed utilizzabile dalla comunità D3.js.
+
+Per la visualizzazione del grafo (comprensivo di nodi, collegamenti e ipergrafi) si è utilizzato un layout già definito dalla libreria D3 chiamato \textbf{Force Layout}. Questo layout prevede una simulazione fisica del tipo \emph{"massa-molla"} ed è possibile definire tutta una serie di forze all'interno della simulazione come, ad esempio, una forza repulsiva tra i nodi del grafo per evitare sovrapposizioni tra essi oppure la risposta elastica esercitata dai collegamenti tra nodi impostando il grado di elasticità delle connessioni. Questo tipo di layout consente quindi lo spostamento dei nodi all'interno dello spazio della simulazione e permette la modifica della configurazione del grafo come richiesto nei requisiti di progetto. In figura~\ref{fig:rif-cap4-hypergraph} è possibile apprezzare visivamente il risultato ottenuto.
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale =  0.6]{figure/hypergraph}
+\caption{Esempio di grafo ottenuto con layout Force e il pacchetto D3-hypergraph}
+\label{fig:rif-cap4-hypergraph}
+\end{figure}
+
+\subsection{Visualizzazione Bigrafo}
+Ottenere la visualizzazione del bigrafo, data la sua specificità, ha richiesto un notevole lavoro di customizzazione dovuto dall'impossibilità di sfruttare layout D3 già pronti per la visualizzazione di grafi con gerarchie tra nodi. La soluzione pensata richiede l'utilizzo di più istanze del layout \textbf{Force} all'interno della stessa visualizzazione: ad esclusione dei nodi radice degli alberi presenti nella visualizzazione ogni insieme di nodi figli viene gestito da un differente layout Force con forze opportunamente calibrate in modo tale da permettere il rendering dei nodi figli all'interno dei nodi padri riuscendo così a creare la tipica visualizzazione dei bigrafi dove l'inclusione esprime gerarchia. Per la creazione dei collegamenti con ipergrafo si è utilizzato il pacchetto \textbf{D3-hypergraph} precedentemente utilizzato nella visualizzazione dei \emph{Link Graph}.
+Si illustrano ora con l'aiuto del codice le fasi essenziali della creazione della visualizzazione.
+\subsubsection{Creazione e visualizzazione radici}
+Per visualizzare i nodi si è innanzitutto ordinato l'array contenente i nodi in base alla loro profondità; i nodi con profondità 0 sono le nostre radici. I nodi radice vengono quindi passati al \emph{Force Layout} che gestisce la creazione e visualizzazione dei nodi radice. La dimensione dell'elemento grafico viene determinata dal numero di discendenti della radice tramite il metodo \emph{node.descendants} fornito dalla libreria D3.
+\begin{figure}[htbp]
+\begin{lstlisting}
+//ordino i nodi in base alla profondità
+	nodes.sort(function(d,e){
+	    return d3.ascending(d.depth,e.depth);
+	});
+	...
+//acquisisco le radici del bigrafo
+	var nodiRoot =[];
+	for (var i=0;i<nodes.length;i++){
+	    if (nodes[i].depth==0){
+		nodiRoot.push(nodes[i])
+	   }	
+	}
+	...
+//creo visualizzazione dei nodi radice 
+	var rootNodes = svg.append("g").attr("class","root").selectAll("g").data(nodiRoot).enter()
+	.append("g").attr("id",function(d){return d.data.id;});		
+	
+\end{lstlisting}
+\caption{Parte del codice per la visualizzazione dei nodi radice}
+\label{sec:rif-cap4-roots}
+\end{figure}
+\subsubsection{Creazione e visualizzazione altri nodi}
+Per la creazione e visualizzazione di altri nodi si è creata un'opportuna funzione \emph{layoutCreation}  che viene invocata per ogni nodo presente nell'array. Se il nodo ha figli la funzione crea un nuovo \emph{Force Layout} con l'array contenente i nodi figli del nodo analizzato come argomento. La funzione inoltre analizza il riferimento di ogni nodo alla signature in modo tale da permettere la creazione dell'elemento grafico da visualizzare. La figura~\ref{fig:rif-cap4-bigrafo} illustra il codice \emph{JSON} che descrive le gerarchie tra nodi e il risultato ottenuto con la creazione degli elementi grafici innestati all'interno dell'elemento grafico padre, in particolare è possibile visualizzare un elemento radice (rettangolo tratteggiato) con 2 figli (elissi); ogni figlio contiene al suo interno i propri elementi figli visualizzati in questo caso con la figura cerchio (le foglie).
+\begin{figure}[h]
+\begin{center}
+\subfloat[file Json che descrive la struttura del bigrafo]{\usebox{\firstlisting}}\hfill
+\subfloat[Esempio di inclusione tra nodi ottenuta con 4 layout Force]{\includegraphics[scale =  1]{figure/Bigrafo}}
+\end{center}
+\caption{Esempio di inclusione tra nodi ottenuta con 4 layout Force}
+\label{fig:rif-cap4-bigrafo}
+\end{figure}
+
+\subsubsection{Creazione e visualizzazione connessioni tra nodi}
+Per realizzare la connessione tra nodi è stato creato un ulteriore force layout a cui sono stati passati tutti i nodi che compongono il bigrafo. La creazione di queste connessioni ha però creato diversi problemi: abitualmente in D3.js utilizzando il layout force le connessioni vengono realizzate tra nodi appartenenti allo stesso layout mentre in questo caso più layout contribuiscono alla visualizzazione grafica desiderata. In particolare gli effetti del layout che agisce sui nodi radice propaga i suoi effetti di spostamento all'interno dell'area SVG su tutti i nodi successori e così via. Un nodo foglia avrà quindi una sequenza di trasformazioni determinate da tutti i suoi nodi antenati. Analizziamo in figura \ref{fig:rif-cap4-translate} il markup generato da un force layout in una visualizzazione standard dove non abbiamo gerarchie di nodi e il markup generato dalla visualizzazione del bigrafo:
+\begin{figure}[htbp]
+\begin{lstlisting}
+//markup generato da force layout 
+...
+<g transform="translate"(100,100)>
+	<circle r="20">
+</g>	
+<g transform="translate"(200,100)>
+	<circle r="20">
+</g>
+...	
+\end{lstlisting}
+\begin{lstlisting}
+//markup generato da force layout multipli
+...
+<g transform="translate"(100,100)>
+	<circle id ="n1" r="20">
+	<g transform="translate"(200,100)>
+		<circle id ="n2" r="20">
+	</g>
+</g>	
+...	
+\end{lstlisting}
+\caption{Differenze tra markup generato da force layout singolo e multipli.}
+\label{fig:rif-cap4-translate}
+\end{figure}
+si nota come le trasformazioni che intervengono sul nodo con id \emph{n2} sono 2 e la somma dei loro effetti determina il reale valore delle coordinate di \emph{n2}: questo comportamento è necessario perché permette l'inclusione all'interno del nodo padre \emph{n1} del nodo figlio \emph{n2} (come desiderato dalla visualizzazione dei bigrafi in cui l'inclusione esprime gerarchia). Questa necessità determina un problema: due layout differenti gestiscono i 2 nodi che vengono rappresentati all'interno della libreria come 2 oggetti in cui le informazioni sulle coordinate sono accessibili mediante le proprietà \emph{nodo.x} e \emph{nodo.y} che però considereranno solo le trasformazioni provocate dal proprio layout force. \\
+Se ad esempio andiamo a verificare le coordinate dei 2 nodi descritti dal markup di figura \ref{fig:rif-cap4-translate} si può notare un'anomalia:
+\begin{figure}[!htbp]
+\begin{lstlisting}
+//lettura proprietà x e y dell'oggetto nodo di n1 e n2 generato da un singolo layout
+console.log("n1.x:"+n1.x,"n1.y:"+d[1].y);
+>n1.x:100 n1.y:100					//Ok
+console.log("n2.x:"+n1.x,"n2.y:"+d[1].y);
+>n2.x:200 n2.y:100					//Ok
+//lettura proprietà x e y dell'oggetto nodo di n1 e n2 generato da 2 layout
+console.log("n1.x:"+n1.x,"n1.y:"+d[1].y);
+>n1.x:100 n1.y:100					//Ok
+console.log("n2.x:"+n1.x,"n2.y:"+d[1].y);
+>n2.x:200 n2.y:100					//Errore!
+\end{lstlisting}
+\caption{Visualizzazione delle proprietà x e y dei nodi}
+\label{fig:rif-cap4-translate-code}
+\end{figure}
+si nota come il nodo \emph{n2} nel secondo esempio non considera la trasformazione eseguita dal layout del nodo n1: se usassi le coordinate fornite dagli oggetti di \emph{n1} e \emph{n2} per creare una connessione tra i 2 nodi non otterrei quanto desiderato come illustrato in figura \ref{rif:fig-trasfnotrasf}(a).
+
+
+Per ovviare a questo problema, determinato dall'uso di molteplici layout e dalla necessità di inclusione di alcuni nodi su altri nodi, si sono create delle nuove proprietà dell'oggetto nodo generato dal layout chiamate \emph{posX} e \emph{posY} e una funzione di calcolo della posizione che tenesse conto, per ogni nodo, delle trasformazioni messe in atto dai nodi antenati. Guardiamo nel dettaglio la funzione in figura \ref{rif:fig-funztrasf}: la funzione legge il valore della trasformazione esercitata dall'elemento \emph{g} che contiene il nodo analizzato e se il nodo ha un padre somma il valore di traslazione letto con il valore di traslazione a cui è stato sotto posto il nodo padre. Questa soluzione permette di ottenere il risultato corretto visibile in figura  \ref{rif:fig-trasfnotrasf}(b).
+\begin{figure}[t]
+\begin{center}
+\subfloat[Link senza trasformazione del nodo padre]{\includegraphics[scale = 1]{figure/notrasf}}\qquad
+\subfloat[Link con trasformazione del nodo padre]{\includegraphics[scale = 1]{figure/trasf}}
+\end{center}
+\caption{Esempi di risultati ottenuti senza considerare la trasformazione eseguita dal nodo padre o invece considerandola}
+\label{rif:fig-trasfnotrasf}
+\end{figure}
+\begin{figure}[t]
+\begin{center}
+\begin{lstlisting}
+	...	
+	//leggo il parametro transform dell'elemento html 
+	var string = absNode.getAttribute("transform");
+	if (string != null)
+		translate = string.substring(string.indexOf("(")+1, string.indexOf(")")).split(",");
+	else{
+		translate[0] = 0;
+		translate[1] = 0;
+	}		
+	//se il nodo ha un padre sommo il valore del trasform dei nodi predecessori al nodo in esame
+	if (e.parent){ 
+		var parentNode = filterNodesById(filterNodes(nodesPos),e.parent.data.id);
+		translation.x = parseFloat(translate[0]);
+		translation.y = parseFloat(translate[1]);
+		e.posX = translation.x + parentNode[0].posX;
+		e.posY = translation.y + parentNode[0].posY;
+	} else {
+		translation.x = parseFloat(translate[0]);
+		translation.y = parseFloat(translate[1]);
+		e.posX = translation.x;
+		e.posY = translation.y;
+	}
+	...
+\end{lstlisting}
+\end{center}
+\caption{Funzione per il calcolo della posizione di un nodo}
+\label{rif:fig-funztrasf}
+\end{figure}
+
+\subsubsection{Creazione e placing dei terminatori di link}
+Nella visualizzazione di \emph{link graph} e \emph{bigrafi}, in letteratura, per meglio definire i nodi collegati ad un dato link e visualizzare il numero di collegamenti che raggiungono un nodo vengono utilizzati dei terminatori di collegamento posti ai vertici del collegamento stesso detti \emph{marker}(vedi figura \ref{fig:rif-cap4-bigrafomarker}).
+\begin{figure}[t]
+\centering
+\includegraphics[scale =  1]{figure/bigraphMarker}
+\caption{Esempio di Bigrafo con utilizzo di marcatori di collegamento}
+\label{fig:rif-cap4-bigrafomarker}
+\end{figure}
+\emph{SVG} prevede l'utilizzo dei marcatori e ha definito un tag specifico per la descrizione di questo elemento grafico: il tag \emph{\textless marker\textgreater}. Questo tag definisce la grafica che verrà utilizzata come elemento grafico ai vertici del collegamento. La definizione della geometria del marker deve essere precedente all'utilizzo del marker e SVG prevede un apposito tag \emph{\textless defs\textgreater} per la definizione di oggetti grafici che potranno essere successivamente usati all'interno della rappresentazione. Vediamo un esempio di utilizzo in \ref{lst:cap4-listingarrow} e il risultato in \ref{fig:rif-cap4-polyarrow}.
+%codice svg freccia
+\begin{figure}[h]
+\begin{center}
+\subfloat{\usebox{\secondlisting}}\hfill
+\subfloat{\includegraphics[scale =  1]{figure/polyarrow}}
+
+%\begin{lstlisting}[language=HTML,label={lst:cap4-listingarrow},caption={Esempio di definizione e utilizzo di un marcatore a freccia con un elemento polyline},captionpos=b]
+%<svg width="120" height="120">
+%//definizione del marker a freccia
+ % <defs>
+    %<marker id="Triangle" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      %<path d="M 0 0 L 10 5 L 0 10 z" />
+    %</marker>
+  %</defs>
+%//utilizzo del marker a freccia al termine dell'elemento polyline
+  %<polyline points="10,90 50,80 90,20" fill="none" stroke="black" 
+     % stroke-width="2" marker-end="url(#Triangle)" />
+%</svg>
+%\end{lstlisting}
+\end{center}
+\caption{Esempio di definizione e utilizzo di un marcatore a freccia con un elemento polyline}
+\end{figure}
+
+All'interno della visualizzazione del bigrafo la problematica principale è determinata dal corretto posizionamento del marker: SVG non è dotato delle primitive per la rilevazione di intersezioni tra oggetti all'interno della visualizzazione, inoltre le molteplici forme usate all'interno del bigrafo non consentono un calcolo dell'intersezione semplice. \emph{D3.js} a differenza di altre librerie, come ad esempio \emph{Cytoscape.js}\footnote{Per maggiori informazioni: http://www.cytoscape.org/} non offre il calcolo del posizionamento dei marcatori dPer la risoluzione di questo problema si è reso necessario l'uso di una libreria \emph{Javascript} chiamata \emph{kld-intersection}\footnote{libreria realizzata da Kevin Lindsey e scaricabile all'indirizzo https://github.com/thelonious/kld-intersections}. L'utilizzo di questa libreria all'interno di questo progetto, presenta un problema: la libreria è distribuita attraverso \emph{npm} e i pacchetti \emph{node} sono specificamente realizzati per l'utilizzo del codice \emph{lato server} mentre l'applicazione di visualizzazione risiede nel client (come visto nel Capitolo 2). Per poter utilizzare la libreria è stata necessaria una riscrittura della stessa che permettesse l'accesso del codice che la compone direttamente senza l'uso di soluzioni software quali \emph{Browserify} o \emph{Require.js} che importano direttamente la libreria all'interno del codice della nostra applicazione pregiudicando però la separazione tra codice dell'applicazione e librerie utilizzate.
+
+Risolto il problema di accesso ai servizi offerti dalla libreria il suo utilizzo si è rivelato abbastanza semplice: nella funzione che definisce ad ogni \emph{tick} (unità di tempo della simulazione fisica del force layout) il ridisegno dei collegamenti viene invocata la funzione per il calcolo dell'intersezione tra l'oggetto nodo (e la sua relativa rappresentazione grafica) e il link (nel nostro caso una curva Bézier quadratica). La libreria ricrea al suo interno gli oggetti grafici di cui bisogna calcolare l'intersezione e restituisce un oggetto contenente lo status dell'intersezione (se c'è o non c'è intersezione) e un array contenente le coordinate delle intersezioni trovate; le coordinate restituite vengono quindi utilizzate per il posizionamento del collegamento al cui estremo è disegnato il marcatore a sfera tipico delle rappresentazioni grafiche dei bigrafi presenti in letteratura. Il risultato ottenuto è visibile in figura \ref{fig:rif-cap4-pathwmarker}.
+\begin{figure}[t]
+\centering
+\includegraphics[scale =  1]{figure/pathwmarker}
+\caption{Posizionamento dei marcatori a seguito del calcolo delle intersezioni tra figure SVG}
+\label{fig:rif-cap4-pathwmarker}
+\end{figure}
+\section {Esempi di visualizzazione}
+Di seguito vengono riportati alcuni esempi dei risultati ottenuti: per ogni visualizzazione viene fornita la struttura dati che la descrive, il \emph{place graph}, il \emph{link graph} e il \emph{bigrafo} ottenuto.
+%Esempio 1
+\subsection{Bigrafo con una radice}
+Viene presentato un esempio minimale con una radice e nessun inner e outer name. I risultati sono visibili in figura \ref{fig:rif-cap4-Es1}
+
+\begin{lstlisting}[language=xml,caption={Struttura dati dell'esempio},captionpos=b]
+{
+"interface":{},			  
+"signature":[{"id":"site","shape":"rect","color":"grey"},
+			{"id":"root","shape":"rect","color":"white"},
+			{"id":"node","shape":"ellipse","color":"white"},
+			{"id":"user2","shape":"polygon","sides":"5","color":"white"}],			  
+"nodes":[{
+	"id": "r0",
+	"type":"root",
+	"children": [{
+		"id": "c1",
+		"type":"user2"
+	},{"id": "c2",
+		"type":"node",
+		"children":[{
+			"id":"s1",
+			"type":"leaf"
+		},{
+			"id":"l1",
+			"type":"leaf"
+	}]}]}],
+"links":[["c2","c1","l1"]]}
+\end{lstlisting}
+
+
+\begin{figure}
+\begin{minipage}{.5\linewidth}
+\centering
+\subfloat[Place Graph]{\includegraphics[scale =  0.45]{figure/Es1Pg}}
+\end{minipage}
+\begin{minipage}{.5\linewidth}
+\centering
+\subfloat[Link Graph]{\includegraphics[scale =  0.8]{figure/Es1Lg}}
+\end{minipage}\par\medskip
+\centering
+\subfloat[Bigrafo]{\includegraphics[scale =  1]{figure/Es1BG}}
+\caption{Visualizzazione risultati esempio}
+\label{fig:rif-cap4-Es1}
+\end{figure}
+
+%Esempio 2
+\subsection{Bigrafo con due radici}
+Viene ora proposto un esempio più complesso con due radici e inner e outer names. Ripropone il rendering del bigrafo in figura \ref{rif:fig-bigrafoComposto}. I risultati sono visibili in figura \ref{fig:rif-cap4-Es2}
+
+\begin{lstlisting}[language=xml,caption={Struttura dati del secondo esempio},captionpos=b]
+{"interface":{"inner":[{"id":"x0"},{"id":"x1"}],
+	          "outer":[{"id":"y0"},{"id":"y1"},{"id":"y2"}]},
+"signature":[{"id":"site","shape":"rect","color":"grey"},
+			{"id":"root","shape":"rect","color":"white"},
+			{"id":"node","shape":"ellipse","color":"white"},
+			{"id":"leaf","shape":"circle","color":"white"}],			  
+"nodes":[{
+	"id": "r0",
+	"type":"root",
+	"children": [{
+		"id": "v2",
+		"type":"node"},
+		{
+		"id": "v0",
+		"type":"node",
+		"children": [{
+			"id": "v1",
+			"type":"node",
+			"children":[{
+				"id": "s0",
+				"type":"site"
+		}]}]}]},{
+	"id": "r1",
+	"type":"root",
+	"children": [{
+		"id": "v3",
+		"type":"node",
+		"children": [{
+			"id": "s2",
+			"type":"site"
+		}]},{
+		"id": "s1",
+		"type":"site"
+	}]}],
+"links":[["v0","v1","v2","y0"],
+	  ["v2","y1"],
+	  ["v2","v3","y2","x0"],
+	  ["x1","v3"]]}
+\end{lstlisting}
+
+\begin{figure}
+\begin{minipage}{.5\linewidth}
+\centering
+\subfloat[Place Graph]{\includegraphics[scale =  0.5]{figure/Es2Pg}}
+\end{minipage}
+\begin{minipage}{.5\linewidth}
+\centering
+\subfloat[Link Graph]{\includegraphics[scale =  0.65]{figure/Es2Lg}}
+\end{minipage}\par\medskip
+\centering
+\subfloat[Bigrafo]{\includegraphics[scale =  0.8]{figure/Es2BG}}
+\caption{Visualizzazione risultati esempio}
+\label{fig:rif-cap4-Es2}
+\end{figure}
+
+%Esempio3
+\subsection{Bigrafo con tre radici}
+Viene ora proposto un esempio più complesso con tre radici, inner e outer names. I risultati sono visibili in figura \ref{fig:rif-cap4-Es3}
+\subsubsection{Struttura dati}
+
+\begin{lstlisting}[language=xml,caption={Struttura dati del terzo esempio},captionpos=b]
+
+"interface":{"inner":[{"id":"x0"},{"id":"x1"}],
+			  "outer":[{"id":"y0"},{"id":"y1"},{"id":"y2"}]},
+"signature":[{"id":"site","shape":"rect","color":"grey"},
+			{"id":"root","shape":"rect","color":"white"},
+			{"id":"node","shape":"ellipse","color":"white"},
+			{"id":"leaf","shape":"circle","color":"white"},
+			{"id":"user1","shape":"polygon","sides":"3","color":"white"},
+			{"id":"user2","shape":"polygon","sides":"5","color":"white"}],			  
+"nodes":[{
+	"id": "r0",
+	"type":"root",
+	"children": [{
+		"id": "v2",
+		"type":"user1"},
+		{
+		"id": "v0",
+		"type":"node",
+		"children": [{
+			"id": "v1",
+			"type":"node",
+			"children":[{
+				"id": "s0",
+				"type":"site"
+		}]}]}]},
+{
+	"id": "r1",
+	"type":"root",
+	"children": [{
+		"id": "v3",
+		"type":"node"
+	},{
+		"id": "s1",
+		"type":"site"}]
+},{
+	"id": "r2",
+	"type":"root",
+	"children": [{
+		"id": "v4",
+		"type":"user2",
+		"children": [{
+			"id": "s2",
+			"type":"site"
+		}]},{
+		"id": "s1",
+		"type":"site"
+		}]}],
+"links":[
+	["v0","v1","v2","x0"],
+	["v2","y1","r1"],
+	["v4","v3","y2","x0"],
+	["x1","v4"]]
+}
+\end{lstlisting}
+
+\begin{figure}
+\begin{minipage}{.5\linewidth}
+\centering
+\subfloat[Place Graph]{\includegraphics[scale =  0.5]{figure/Es3Pg}}
+\end{minipage}
+\begin{minipage}{.5\linewidth}
+\centering
+\subfloat[Link Graph]{\includegraphics[scale =  0.75]{figure/Es3Lg}}
+\end{minipage}\par\medskip
+\centering
+\subfloat[Bigrafo]{\includegraphics[scale =  0.9]{figure/Es3BG}}
+\caption{Visualizzazione risultati esempio}
+\label{fig:rif-cap4-Es3}
+\end{figure}
+
+%conclusioni
+\chapter{Conclusioni}
+In questa tesi è stata presentata l'implementazione di un sistema di visualizzazione del meta-modello dei bigrafi. Prendendo come riferimento il modello grafico proposto da Milner si è cercato di svilupparlo attraverso l'uso di un browser, SVG e D3.js. Inizialmente si sono definiti nel dettaglio gli aspetti di interesse dei Bigrafi (tipologie di nodi, ipergrafi e interfacce) e le diverse rappresentazioni grafiche da sviluppare in particolare Place Graph, Link Graph, e visualizzazione del Bigrafo come unione delle due visualizzazioni precedenti. Per fare ciò si è definita una struttura dati in JSON che definisse ogni aspetto interessante per la visualizzazione del bigrafo, in particolare la gerarchia tra nodi, la loro forma e il collegamento tra di essi. Successivamente si sono creati, attraverso l'uso della libreria D3.js, le rappresentazioni grafiche di Place Graph, Link Graph e del Bigrafo. In particolare per la visualizzazione di Link Graph e del Bigrafo si è usata una versione customizzata del layout Force di D3.js che permette l'interazione (drag e zoom) tra l'utente e la rappresentazione grafica del modello.
+
+I requisiti descritti in fase di analisi sono stati soddisfatti, permettendo di ottenere un risultato finale corrispondente alle aspettative iniziali. Le azioni disponibili all'utente ( zoom e dragging ) sono state implementate mentre il pinning non è stato reputato interessante ai fini dell'interazione con il link graph e il bigrafo.
+
+l progetto di tesi ha rappresentato una sfida importante data l'impossibilità di ottenere con gli strumenti offerti di default dalla libreria D3.js quanto era necessario al raggiungimento dei requisiti di progetto. Problemi come la creazione dell'ipergrafo, la gestione di force layout multipli e il posizionamento dei marcatori si sono rivelati tutt'altro che banali e la loro soluzione ha rappresentato un momento di crescita personale importante. Il progetto di tesi ha inoltre permesso la creazione di un nuovo pacchetto utilizzabile dagli utenti della libreria D3.js (d3-Hypergraph) e il futuro rilascio di un pacchetto per la gestione dei marcatori di collegamento sempre per D3.js.
+
+Alcuni sviluppi possibili del lavoro svolto riguardano la possibilità di visualizzare anche la trasformazione di bigrafi del tipo BRS (Bigraphical Reactive Systems) o quantomeno permettere una modifica della visualizzazione del bigrafo al modificarsi del file JSON che lo descrive. Dotando il bigrafo di una palette di immagini sarà possibile creare visualizzazioni semanticamente più vicine al contesto preso in esame dal bigrafo.
+
+Grazie al lavoro svolto in questa tesi è ora possibile visualizzare un bigrafo con estrema facilità utilizzando un moderno browser web, permettendo la visualizzazione dei bigrafi potenzialmente su qualsiasi dispositivo.
+%% Fine dei capitoli normali, inizio dei capitoli-appendice (opzionali)
+%\appendix
+
+
+%% Bibliografia (opzionale)
+\bibliographystyle{plain_italian}%% Carica l'omonimo file .bst, dove \languagename è la lingua attiva.
+%% Nel caso in cui si usi un file .bib (consigliato)
+\bibliography{thud}
+%% Nel caso di bibliografia manuale, usare l'environment thebibliography.
+
+%% Per l'indice analitico, usare il pacchetto makeidx (o analogo).
+
+\end{document}

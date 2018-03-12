@@ -1,0 +1,49 @@
+\begin{thebibliography}{1}
+
+\bibitem{bgm:dbtk}
+Giorgio Bacci, Davide Grohmann, e Marino Miculan.
+\newblock Dbtk: a toolkit for directed bigraphs.
+\newblock  In {\em CALCO 2009 Conference Proceedings - Calco Tools}, volume
+  5728 di {\em LNCS}. Springer, 2009.
+
+\bibitem{bgm:biobeta}
+Giorgio Bacci, Davide Grohmann, e Marino Miculan.
+\newblock A framework for protein and membrane interactions In {\em Proc.
+  MeCBIC'09}.
+\newblock  A cura di Gabriel Ciobanu, volume~11 di {\em EPTCS}, 2009.
+
+\bibitem{debois2005bigraphs}
+S{\o}ren Debois e Troels~C Damgaard.
+\newblock Bigraphs by example.
+\newblock Relazione tecnica, Citeseer, 2005.
+
+\bibitem{faithfull2013big}
+Alexander~John Faithfull, Gian Perrone, e Thomas~T Hildebrandt.
+\newblock Big red: A development environment for bigraphs.
+\newblock {\em Electronic Communications of the EASST}, 61, 2013.
+
+\bibitem{DBLP:conf/ac/Milner03}
+Robin Milner.
+\newblock Bigraphs for petri nets.
+\newblock  In {\em Lectures on Concurrency and Petri Nets, Advances in Petri
+  Nets [This tutorial volume originates from the 4th Advanced Course on Petri
+  Nets, {ACPN} 2003, held in Eichst{\"{a}}tt, Germany in September 2003. In
+  addition to lectures given at {ACPN} 2003, additional chapters have been
+  commissioned]}, pp. 686--701, 2003.
+
+\bibitem{milner2006pure}
+Robin Milner.
+\newblock Pure bigraphs: Structure and dynamics.
+\newblock {\em Information and computation}, 204(1):60--122, 2006.
+
+\bibitem{DBLP:books/daglib/0022395}
+Robin Milner.
+\newblock {\em The Space and Motion of Communicating Agents}.
+\newblock Cambridge University Press, 2009.
+
+\bibitem{Murray:2013:IDV:2544036}
+Scott Murray.
+\newblock {\em Interactive Data Visualization for the Web}.
+\newblock O'Reilly Media, Inc., 2013.
+
+\end{thebibliography}
