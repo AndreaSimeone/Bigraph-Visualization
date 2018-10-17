@@ -4,7 +4,7 @@
 
 ## Installing
 
-Download the [latest release](https://github.com/AndreaSimeone/Bigraph-Visualization/releases/latest) use your favorite web server to run the visualization. For create your own Bigraph consider to edit the JSON files contained into the Data folder and use a [JSON validator](https://jsonlint.com/). 
+Download the [latest release](https://github.com/AndreaSimeone/Bigraph-Visualization/releases/latest) use your favorite web server to run the visualization. For the creation of your own Bigraph consider to edit the JSON files contained into the Data folder and use a [JSON validator](https://jsonlint.com/). 
 
 ## Package Overview
 
